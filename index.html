@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steven Gaillard - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#004a99',
+                        secondary: '#f0f2f5',
+                        dark: '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-800 font-sans">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300" id="navbar">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl font-bold text-primary tracking-tight" data-i18n="name">Steven Gaillard</h1>
+                <p class="text-xs text-gray-500 font-medium uppercase tracking-wider" data-i18n="role">Civil & Structural Engineer</p>
+            </div>
+            <div class="flex items-center gap-6">
+                <div class="hidden md:flex gap-6 text-sm font-medium text-gray-600">
+                    <a href="#about" class="hover:text-primary transition" data-i18n="nav_about">About</a>
+                    <a href="#education" class="hover:text-primary transition" data-i18n="nav_edu">Education</a>
+                    <a href="#experience" class="hover:text-primary transition" data-i18n="nav_exp">Experience</a>
+                    <a href="#projects" class="hover:text-primary transition" data-i18n="nav_proj">Projects</a>
+                    <a href="#publications" class="hover:text-primary transition" data-i18n="nav_pubs">Research</a>
+                </div>
+                <button onclick="toggleLanguage()" class="bg-primary hover:bg-blue-800 text-white px-4 py-1.5 rounded-full text-xs font-bold transition shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-globe"></i> <span id="lang-label">中文</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-white border-b relative overflow-hidden" id="about">
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-slate-50 transform skew-x-12 translate-x-20 z-0"></div>
+        
+        <div class="max-w-6xl mx-auto px-4 py-20 flex flex-col md:flex-row items-center gap-12 relative z-10">
+            <div class="flex-1 space-y-6">
+                <div class="space-y-2">
+                    <p class="text-lg text-gray-500 font-medium" data-i18n="hero_greeting">Hello, I'm</p>
+                    <h2 class="text-5xl md:text-6xl font-bold text-slate-900 leading-tight">
+                        <span data-i18n="name">Steven Gaillard</span>
+                        <span class="text-primary text-6xl">.</span>
+                    </h2>
+                </div>
+                <p class="text-lg text-gray-600 max-w-xl leading-relaxed" data-i18n="hero_desc">
+                    Master's student in Civil and Construction Engineering at NTUST. Passionate about structural optimization, machine learning in engineering, and software development.
+                </p>
+                
+                <div class="flex flex-wrap gap-4 pt-4">
+                    <a href="mailto:gacchuguts@gmail.com" class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-800 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-envelope mr-2"></i> <span data-i18n="btn_contact">Contact Me</span>
+                    </a>
+                    <a href="https://github.com/stevengaillard" target="_blank" class="border border-gray-300 bg-white text-gray-700 px-6 py-3 rounded-lg font-medium hover:bg-gray-50 hover:border-gray-400 transition transform hover:-translate-y-0.5">
+                        <i class="fa-brands fa-github mr-2"></i> GitHub
+                    </a>
+                    <a href="tel:+886987067808" class="text-gray-500 hover:text-primary px-4 py-3 transition text-sm flex items-center">
+                         <i class="fa-solid fa-phone mr-2"></i> +886 987 067 808
+                    </a>
+                </div>
+            </div>
+            
+            <div class="relative group">
+                <div class="absolute inset-0 bg-primary rounded-full blur opacity-20 group-hover:opacity-30 transition duration-500"></div>
+                <div class="w-64 h-64 bg-slate-200 rounded-full flex items-center justify-center text-slate-400 border-8 border-white shadow-2xl overflow-hidden relative z-10">
+                    <i class="fa-solid fa-user text-8xl"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-16 space-y-24">
+
+        <!-- Education -->
+        <section id="education" class="scroll-mt-24">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-10 w-1 bg-primary rounded-full"></div>
+                <h3 class="text-3xl font-bold text-slate-800" data-i18n="sec_edu">Education</h3>
+            </div>
+            
+            <div class="relative border-l-2 border-gray-200 ml-4 space-y-12">
+                <!-- NTUST -->
+                <div class="relative pl-8">
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 bg-primary rounded-full border-4 border-white shadow-sm"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition group">
+                        <div class="flex flex-col md:flex-row justify-between md:items-start gap-2 mb-2">
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-900 group-hover:text-primary transition" data-i18n="edu_ntust">National Taiwan University of Science and Technology</h4>
+                                <p class="text-primary font-medium text-lg" data-i18n="edu_ntust_deg">M.S. in Civil and Construction Engineering</p>
+                                <p class="text-sm text-gray-500 mt-1 flex items-center"><i class="fa-solid fa-location-dot mr-2"></i> Taipei, Taiwan</p>
+                            </div>
+                            <span class="bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-full border border-blue-100 whitespace-nowrap" data-i18n="edu_ntust_date">Sept. 2024 - Jul. 2025</span>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                             <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xs font-bold uppercase text-gray-400 tracking-wider">GPA</span>
+                                <span class="text-sm font-bold text-slate-800">4.20 / 4.30</span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed italic" data-i18n="edu_ntust_thesis">
+                                Thesis: Optimizing High-Dimensional Steel Structure Design: A Hybrid Framework Integrating Dimensionality Reduction and Metaheuristic Algorithms
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Petra Master -->
+                <div class="relative pl-8">
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 bg-slate-300 rounded-full border-4 border-white shadow-sm"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition group">
+                         <div class="flex flex-col md:flex-row justify-between md:items-start gap-2 mb-2">
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-900 group-hover:text-primary transition" data-i18n="edu_petra">Petra Christian University</h4>
+                                <p class="text-primary font-medium text-lg" data-i18n="edu_petra_m_deg">M.S. in Civil Engineering</p>
+                                <p class="text-sm text-gray-500 mt-1 flex items-center"><i class="fa-solid fa-location-dot mr-2"></i> Surabaya, Indonesia</p>
+                            </div>
+                            <span class="bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full border border-gray-200 whitespace-nowrap" data-i18n="edu_petra_m_date">Mar. 2024 - Jul. 2025</span>
+                        </div>
+                         <div class="mt-4 pt-4 border-t border-gray-100">
+                             <div class="flex items-center gap-2">
+                                <span class="text-xs font-bold uppercase text-gray-400 tracking-wider">GPA</span>
+                                <span class="text-sm font-bold text-slate-800">4.00 / 4.00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Petra Bachelor -->
+                <div class="relative pl-8">
+                    <div class="absolute -left-[9px] top-1 w-4 h-4 bg-slate-300 rounded-full border-4 border-white shadow-sm"></div>
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition group">
+                        <div class="flex flex-col md:flex-row justify-between md:items-start gap-2 mb-2">
+                            <div>
+                                <h4 class="text-xl font-bold text-slate-900 group-hover:text-primary transition" data-i18n="edu_petra">Petra Christian University</h4>
+                                <p class="text-primary font-medium text-lg" data-i18n="edu_petra_b_deg">B.S. in Civil Engineering</p>
+                            </div>
+                            <span class="bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full border border-gray-200 whitespace-nowrap" data-i18n="edu_petra_b_date">Aug. 2020 - Mar. 2024</span>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-100">
+                             <div class="flex items-center gap-2 mb-2">
+                                <span class="text-xs font-bold uppercase text-gray-400 tracking-wider">GPA</span>
+                                <span class="text-sm font-bold text-slate-800">3.95 / 4.00</span>
+                            </div>
+                            <p class="text-gray-600 text-sm leading-relaxed italic" data-i18n="edu_petra_b_thesis">
+                                Thesis: Optimization of Earthquake Resistance Reinforced Concrete Portal Using Metaheuristic
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section id="experience" class="scroll-mt-24">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-10 w-1 bg-primary rounded-full"></div>
+                <h3 class="text-3xl font-bold text-slate-800" data-i18n="sec_exp">Experience</h3>
+            </div>
+            
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition">
+                <div class="absolute top-0 left-0 w-1.5 h-full bg-primary group-hover:w-2 transition-all"></div>
+                
+                <div class="flex flex-col md:flex-row justify-between items-start mb-4">
+                    <div>
+                        <h4 class="text-2xl font-bold text-slate-800">CV. MULTI CONSTRUCT INDONESIA</h4>
+                        <p class="text-primary font-semibold text-lg mt-1" data-i18n="exp_role">Structural Engineer, Site Engineer, Estimator</p>
+                    </div>
+                    <div class="text-right mt-2 md:mt-0">
+                        <span class="text-sm text-gray-500 font-medium block" data-i18n="exp_date">Dec. 2023 - Jul. 2024</span>
+                        <span class="text-xs text-gray-400 block mt-1"><i class="fa-solid fa-location-dot mr-1"></i> Surabaya, Indonesia</span>
+                    </div>
+                </div>
+                
+                <div class="mt-6 space-y-3">
+                    <div class="flex gap-3">
+                        <div class="mt-1.5 w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></div>
+                        <p class="text-gray-600 text-sm leading-relaxed" data-i18n="exp_desc1">Led the design and analysis of structural systems for residential and commercial projects including malls, factories, and jetties.</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="mt-1.5 w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></div>
+                        <p class="text-gray-600 text-sm leading-relaxed" data-i18n="exp_desc2">Ensured compliance with Indonesian building codes (SNI) and safety standards.</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="mt-1.5 w-1.5 h-1.5 bg-primary rounded-full flex-shrink-0"></div>
+                        <p class="text-gray-600 text-sm leading-relaxed" data-i18n="exp_desc3">Conducted cost estimation (QS) and quality assurance (QA) on site.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="scroll-mt-24">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-10 w-1 bg-primary rounded-full"></div>
+                <h3 class="text-3xl font-bold text-slate-800" data-i18n="sec_proj">Featured Projects</h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                
+                <!-- Project 1: Anchor Analysis Tool -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col group">
+                    <div class="h-2 bg-gradient-to-r from-primary to-blue-500"></div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="p-3 bg-blue-50 rounded-lg text-primary">
+                                <i class="fa-solid fa-anchor text-2xl"></i>
+                            </div>
+                            <div class="flex gap-2 items-center">
+                                <span class="bg-yellow-100 text-yellow-700 text-xs font-bold px-2 py-1 rounded uppercase">Ongoing</span>
+                                <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded uppercase">Web App</span>
+                            </div>
+                        </div>
+                        
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-primary transition">Anchor Analysis Tool (ACI 318-19)</h4>
+                        
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed">
+                            Professional engineering tool for calculating anchor bolt capacity in concrete per ACI 318-19 standards. Features dynamic analysis, PDF reports with LaTeX formulas, and Firebase cloud storage.
+                        </p>
+                        
+                        <div class="bg-blue-50 p-3 rounded-lg mb-4 text-xs">
+                            <p class="font-semibold mb-1 text-gray-700">Key Features:</p>
+                            <ul class="list-disc list-inside space-y-0.5 text-gray-700">
+                                <li>Real-time compliance checking</li>
+                                <li>Multi-language support (EN/ZH)</li>
+                                <li>Professional PDF reports</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="border-t border-gray-100 pt-4 mt-auto">
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">JavaScript</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Firebase</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Tailwind</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">jsPDF</span>
+                            </div>
+                            <div class="flex gap-3">
+                                <a href="https://stevengaillard.github.io/FengYu/" target="_blank" class="inline-flex items-center text-sm font-bold text-primary hover:text-blue-800 transition">
+                                    <span>Live Demo</span> 
+                                    <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                                </a>
+                                <a href="https://github.com/stevengaillard/FengYu" target="_blank" class="inline-flex items-center text-sm font-bold text-gray-600 hover:text-gray-800 transition">
+                                    <i class="fa-brands fa-github mr-1"></i> Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Project Management System -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col group">
+                    <div class="h-2 bg-gradient-to-r from-emerald-500 to-teal-500"></div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="p-3 bg-emerald-50 rounded-lg text-emerald-600">
+                                <i class="fa-solid fa-tasks text-2xl"></i>
+                            </div>
+                            <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded uppercase">Full Stack</span>
+                        </div>
+                        
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-emerald-600 transition">Construction Project Management</h4>
+                        
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed">
+                            Web-based platform for construction firms with real-time collaboration, document tracking, budget monitoring, and timeline visualization.
+                        </p>
+                        
+                        <div class="bg-emerald-50 p-3 rounded-lg mb-4 text-xs">
+                            <p class="font-semibold mb-1 text-gray-700">Core Capabilities:</p>
+                            <ul class="list-disc list-inside space-y-0.5 text-gray-700">
+                                <li>Task & milestone tracking</li>
+                                <li>Budget & resource management</li>
+                                <li>Document version control</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="border-t border-gray-100 pt-4 mt-auto">
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">React</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Node.js</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">MongoDB</span>
+                            </div>
+                            <a href="https://github.com/stevengaillard" target="_blank" class="inline-flex items-center text-sm font-bold text-emerald-600 hover:text-emerald-800 transition">
+                                <i class="fa-brands fa-github mr-1"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Fertility Rate Dashboard -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col group">
+                    <div class="h-2 bg-gradient-to-r from-pink-500 to-rose-500"></div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="p-3 bg-pink-50 rounded-lg text-pink-600">
+                                <i class="fa-solid fa-chart-line text-2xl"></i>
+                            </div>
+                            <span class="bg-pink-100 text-pink-700 text-xs font-bold px-2 py-1 rounded uppercase">Data Viz</span>
+                        </div>
+                        
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-pink-600 transition">Global Fertility Rate Dashboard</h4>
+                        
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed">
+                            Interactive visualization platform analyzing global fertility trends with dynamic filtering, comparative analysis, and predictive modeling using D3.js.
+                        </p>
+                        
+                        <div class="bg-pink-50 p-3 rounded-lg mb-4 text-xs">
+                            <p class="font-semibold mb-1 text-gray-700">Analysis Features:</p>
+                            <ul class="list-disc list-inside space-y-0.5 text-gray-700">
+                                <li>Time-series trend analysis</li>
+                                <li>Geographic heat mapping</li>
+                                <li>Predictive forecasting</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="border-t border-gray-100 pt-4 mt-auto">
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Python</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">D3.js</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Pandas</span>
+                            </div>
+                            <a href="https://github.com/stevengaillard" target="_blank" class="inline-flex items-center text-sm font-bold text-pink-600 hover:text-pink-800 transition">
+                                <i class="fa-brands fa-github mr-1"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: BIM Unity Simulation -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col group">
+                    <div class="h-2 bg-gradient-to-r from-orange-500 to-amber-500"></div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="p-3 bg-orange-50 rounded-lg text-orange-600">
+                                <i class="fa-solid fa-cube text-2xl"></i>
+                            </div>
+                            <span class="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded uppercase">3D/VR</span>
+                        </div>
+                        
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-orange-600 transition">BIM Construction Simulation</h4>
+                        
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed">
+                            Immersive 3D simulation integrating BIM with Unity for virtual walkthroughs, safety training, and design review with VR support.
+                        </p>
+                        
+                        <div class="bg-orange-50 p-3 rounded-lg mb-4 text-xs">
+                            <p class="font-semibold mb-1 text-gray-700">Simulation Modules:</p>
+                            <ul class="list-disc list-inside space-y-0.5 text-gray-700">
+                                <li>4D construction sequencing</li>
+                                <li>Clash detection visualization</li>
+                                <li>VR/AR compatibility</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="border-t border-gray-100 pt-4 mt-auto">
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Unity</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">C#</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Revit API</span>
+                            </div>
+                            <a href="https://github.com/stevengaillard" target="_blank" class="inline-flex items-center text-sm font-bold text-orange-600 hover:text-orange-800 transition">
+                                <i class="fa-brands fa-github mr-1"></i> View Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Publications & Research -->
+        <section id="publications" class="scroll-mt-24">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-10 w-1 bg-purple-600 rounded-full"></div>
+                <h3 class="text-3xl font-bold text-slate-800">Publications & Research</h3>
+            </div>
+
+            <!-- Master's Thesis -->
+            <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 mb-6 border-2 border-purple-100 shadow-sm hover:shadow-lg transition group">
+                <div class="flex items-start gap-4">
+                    <div class="p-4 bg-white rounded-lg shadow-sm">
+                        <i class="fa-solid fa-graduation-cap text-3xl text-purple-600"></i>
+                    </div>
+                    <div class="flex-1">
+                        <span class="inline-block bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">MASTER'S THESIS</span>
+                        <h4 class="text-lg font-bold text-slate-800 leading-tight mb-2">
+                            Optimizing High-Dimensional Steel Structure Design: A Hybrid Framework Integrating Dimensionality Reduction and Metaheuristic Algorithms
+                        </h4>
+                        <p class="text-sm text-gray-600 mb-3">
+                            <span class="font-semibold">National Taiwan University of Science and Technology</span> • Expected July 2025
+                        </p>
+                        <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                            Novel hybrid framework combining PCA, t-SNE, and metaheuristic algorithms (PSO, GA) to solve high-dimensional steel structure design problems, achieving up to 60% reduction in optimization time.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="text-xs bg-white text-purple-700 font-medium px-2 py-1 rounded-full border border-purple-200">Structural Optimization</span>
+                            <span class="text-xs bg-white text-purple-700 font-medium px-2 py-1 rounded-full border border-purple-200">Machine Learning</span>
+                            <span class="text-xs bg-white text-purple-700 font-medium px-2 py-1 rounded-full border border-purple-200">Metaheuristics</span>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="inline-flex items-center text-sm font-bold text-purple-600 hover:text-purple-800 transition bg-white px-4 py-2 rounded-lg shadow-sm">
+                                <i class="fa-solid fa-file-pdf mr-2"></i> Download Thesis
+                            </a>
+                            <a href="https://github.com/stevengaillard" target="_blank" class="inline-flex items-center text-sm font-bold text-gray-600 hover:text-gray-800 transition bg-white px-4 py-2 rounded-lg shadow-sm">
+                                <i class="fa-brands fa-github mr-2"></i> Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bachelor's Thesis -->
+            <div class="bg-white rounded-xl p-5 mb-6 border border-gray-200 shadow-sm hover:shadow-md transition group">
+                <div class="flex items-start gap-3">
+                    <div class="p-3 bg-blue-50 rounded-lg">
+                        <i class="fa-solid fa-book text-xl text-primary"></i>
+                    </div>
+                    <div class="flex-1">
+                        <span class="inline-block bg-blue-100 text-primary text-xs font-bold px-2 py-1 rounded-full mb-2">BACHELOR'S THESIS</span>
+                        <h4 class="text-base font-bold text-slate-800 mb-2">
+                            Optimization of Earthquake Resistance Reinforced Concrete Portal Using Metaheuristic
+                        </h4>
+                        <p class="text-sm text-gray-600 mb-2">
+                            <span class="font-semibold">Petra Christian University</span> • March 2024
+                        </p>
+                        <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                            Applied metaheuristic algorithms to enhance seismic performance of RC portal frames while minimizing costs. Validated against Indonesian codes (SNI 1726 & SNI 2847).
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="text-xs bg-slate-50 text-slate-700 px-2 py-1 rounded-full border">Seismic Design</span>
+                            <span class="text-xs bg-slate-50 text-slate-700 px-2 py-1 rounded-full border">RC Structures</span>
+                        </div>
+                        <a href="#" class="inline-flex items-center text-sm font-bold text-primary hover:text-blue-800 transition">
+                            <i class="fa-solid fa-file-pdf mr-1"></i> Download PDF
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conference Papers Section -->
+            <div class="mt-8">
+                <h4 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-newspaper text-primary"></i>
+                    Conference Papers & Articles
+                </h4>
+                
+                <div class="space-y-4">
+                    <!-- Add your papers here - Example template -->
+                    <div class="bg-white rounded-lg p-4 border border-gray-200 hover:border-primary hover:shadow-md transition group">
+                        <div class="flex items-start justify-between gap-4">
+                            <div class="flex-1">
+                                <h5 class="font-bold text-slate-800 mb-1 group-hover:text-primary transition text-sm">
+                                    [Your Paper Title Here]
+                                </h5>
+                                <p class="text-xs text-gray-600 mb-2">
+                                    S. Gaillard, et al. • <span class="italic">[Conference/Journal Name]</span> • 2024
+                                </p>
+                                <p class="text-xs text-gray-600 mb-2">
+                                    [Brief description of your paper...]
+                                </p>
+                                <div class="flex gap-3">
+                                    <a href="#" class="text-xs font-bold text-primary hover:text-blue-800 transition inline-flex items-center">
+                                        <i class="fa-solid fa-file-pdf mr-1"></i> PDF
+                                    </a>
+                                    <a href="#" class="text-xs font-bold text-gray-600 hover:text-gray-800 transition inline-flex items-center">
+                                        <i class="fa-solid fa-external-link-alt mr-1"></i> DOI
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="px-2 py-1 bg-blue-50 text-primary text-xs font-bold rounded-full">
+                                CONFERENCE
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills & Awards Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            
+            <!-- Skills -->
+            <section>
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="h-8 w-1 bg-primary rounded-full"></div>
+                    <h3 class="text-2xl font-bold text-slate-800">Skills</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full">
+                    <div class="space-y-6">
+                        <div>
+                            <h5 class="text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-code"></i> Programming & Software
+                            </h5>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-slate-50 border text-slate-700 px-3 py-1 rounded-lg text-sm font-medium">Python</span>
+                                <span class="bg-slate-50 border text-slate-700 px-3 py-1 rounded-lg text-sm font-medium">C++</span>
+                                <span class="bg-slate-50 border text-slate-700 px-3 py-1 rounded-lg text-sm font-medium">MATLAB</span>
+                                <span class="bg-slate-50 border text-slate-700 px-3 py-1 rounded-lg text-sm font-medium">JavaScript</span>
+                                <span class="bg-slate-50 border text-slate-700 px-3 py-1 rounded-lg text-sm font-medium">ETABS</span>
+                                <span class="bg-slate-50 border text-slate-700 px-3 py-1 rounded-lg text-sm font-medium">SAP2000</span>
+                                <span class="bg-slate-50 border text-slate-700 px-3 py-1 rounded-lg text-sm font-medium">AutoCAD</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h5 class="text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-language"></i> Languages
+                            </h5>
+                            <div class="grid grid-cols-3 gap-3">
+                                <div class="bg-slate-50 p-3 rounded-lg border text-center">
+                                    <span class="block text-slate-800 font-bold text-sm">Indonesian</span>
+                                    <span class="block text-gray-500 text-xs mt-1">Native</span>
+                                </div>
+                                <div class="bg-slate-50 p-3 rounded-lg border text-center">
+                                    <span class="block text-slate-800 font-bold text-sm">English</span>
+                                    <span class="block text-gray-500 text-xs mt-1">C1</span>
+                                </div>
+                                <div class="bg-slate-50 p-3 rounded-lg border text-center">
+                                    <span class="block text-slate-800 font-bold text-sm">Chinese</span>
+                                    <span class="block text-gray-500 text-xs mt-1">A2</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Awards -->
+            <section>
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="h-8 w-1 bg-yellow-500 rounded-full"></div>
+                    <h3 class="text-2xl font-bold text-slate-800">Honors & Awards</h3>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full">
+                    <ul class="space-y-5">
+                        <li class="flex gap-3 group">
+                            <div class="w-10 h-10 rounded-full bg-yellow-50 flex items-center justify-center text-yellow-500 flex-shrink-0">
+                                <i class="fa-solid fa-trophy text-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm">NSTC Scholarship</h5>
+                                <span class="text-gray-400 text-xs mt-1 block">Jul. 2025</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-3 group">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-primary flex-shrink-0">
+                                <i class="fa-solid fa-medal text-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm">Valedictorian - 85th Graduation</h5>
+                                <span class="text-gray-400 text-xs mt-1 block">Mar. 2024</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-3 group">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-primary flex-shrink-0">
+                                <i class="fa-solid fa-award text-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm">PT Adaro Indonesia Scholarship</h5>
+                                <span class="text-gray-400 text-xs mt-1 block">Jun. 2023</span>
+                            </div>
+                        </li>
+                        <li class="flex gap-3 group">
+                            <div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-primary flex-shrink-0">
+                                <i class="fa-solid fa-star text-lg"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-slate-800 text-sm">1st Winner - Civil Analysis & Photography</h5>
+                                <span class="text-gray-400 text-xs mt-1 block">Jun. 2022</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12 mt-20">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-2">Let's Connect</h2>
+            <p class="text-gray-400 mb-8">Feel free to reach out for collaborations or just a friendly hello</p>
+            
+            <div class="flex justify-center gap-6 mb-8">
+                <a href="mailto:gacchuguts@gmail.com" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition">
+                    <i class="fa-solid fa-envelope text-xl"></i>
+                </a>
+                <a href="tel:+886987067808" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition">
+                    <i class="fa-solid fa-phone text-xl"></i>
+                </a>
+                <a href="https://github.com/stevengaillard" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-black transition">
+                    <i class="fa-brands fa-github text-xl"></i>
+                </a>
+            </div>
+            
+            <div class="border-t border-white/10 pt-6">
+                <p class="text-gray-500 text-xs">
+                    &copy; 2025 Steven Gaillard. Built with HTML & Tailwind CSS.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Language Toggle Script -->
+    <script>
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'zh' : 'en';
+            document.getElementById('lang-label').innerText = currentLang === 'en' ? '中文' : 'EN';
+            
+            document.body.classList.remove('fade-in');
+            void document.body.offsetWidth;
+            document.body.classList.add('fade-in');
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const translations = {
+                    en: {
+                        name: "Steven Gaillard",
+                        role: "Civil & Structural Engineer",
+                        nav_about: "About",
+                        nav_edu: "Education",
+                        nav_exp: "Experience",
+                        nav_proj: "Projects",
+                        nav_pubs: "Research",
+                        hero_greeting: "Hello, I'm",
+                        hero_desc: "Master's student in Civil and Construction Engineering at NTUST. Passionate about structural optimization, machine learning, and software development.",
+                        btn_contact: "Contact Me",
+                        sec_edu: "Education",
+                        edu_ntust: "National Taiwan University of Science and Technology",
+                        edu_ntust_deg: "M.S. in Civil and Construction Engineering",
+                        edu_ntust_date: "Sept. 2024 - Jul. 2025",
+                        edu_ntust_thesis: "Thesis: Optimizing High-Dimensional Steel Structure Design: A Hybrid Framework Integrating Dimensionality Reduction and Metaheuristic Algorithms",
+                        edu_petra: "Petra Christian University",
+                        edu_petra_m_deg: "M.S. in Civil Engineering",
+                        edu_petra_m_date: "Mar. 2024 - Jul. 2025",
+                        edu_petra_b_deg: "B.S. in Civil Engineering",
+                        edu_petra_b_date: "Aug. 2020 - Mar. 2024",
+                        edu_petra_b_thesis: "Thesis: Optimization of Earthquake Resistance Reinforced Concrete Portal Using Metaheuristic",
+                        sec_exp: "Experience",
+                        exp_date: "Dec. 2023 - Jul. 2024",
+                        exp_role: "Structural Engineer, Site Engineer, Estimator",
+                        exp_desc1: "Led the design and analysis of structural systems for residential and commercial projects including malls, factories, and jetties.",
+                        exp_desc2: "Ensured compliance with Indonesian building codes (SNI) and safety standards.",
+                        exp_desc3: "Conducted cost estimation (QS) and quality assurance (QA) on site.",
+                        sec_proj: "Featured Projects"
+                    },
+                    zh: {
+                        name: "曾志强 (Steven Gaillard)",
+                        role: "土木與結構工程師",
+                        nav_about: "關於我",
+                        nav_edu: "學歷",
+                        nav_exp: "工作經驗",
+                        nav_proj: "專案作品",
+                        nav_pubs: "研究成果",
+                        hero_greeting: "你好，我是",
+                        hero_desc: "國立臺灣科技大學土木與建築工程碩士生。熱衷於結構優化、機器學習與軟體開發。",
+                        btn_contact: "聯絡我",
+                        sec_edu: "教育背景",
+                        edu_ntust: "國立臺灣科技大學",
+                        edu_ntust_deg: "土木與建築工程碩士",
+                        edu_ntust_date: "2024年9月 - 2025年7月",
+                        edu_ntust_thesis: "論文：結合維度縮減與元啟發式演算法優化高維鋼結構設計",
+                        edu_petra: "Petra Christian University",
+                        edu_petra_m_deg: "土木工程碩士",
+                        edu_petra_m_date: "2024年3月 - 2025年7月",
+                        edu_petra_b_deg: "土木工程學士",
+                        edu_petra_b_date: "2020年8月 - 2024年3月",
+                        edu_petra_b_thesis: "論文：使用元啟發法優化抗震鋼筋混凝土門框",
+                        sec_exp: "工作經驗",
+                        exp_date: "2023年12月 - 2024年7月",
+                        exp_role: "結構工程師 / 現場工程師 / 預算員",
+                        exp_desc1: "主導住宅和商業項目的結構設計與分析，包括購物中心、工廠和碼頭。",
+                        exp_desc2: "確保設計符合印尼建築規範 (SNI) 與安全標準。",
+                        exp_desc3: "負責現場成本估算 (QS) 與品質保證 (QA)。",
+                        sec_proj: "精選專案"
+                    }
+                };
+                
+                if (translations[currentLang][key]) {
+                    el.innerText = translations[currentLang][key];
+                }
+            });
+        }
+    </script>
+</body>
+</html>
