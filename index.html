@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'media',
@@ -28,7 +29,17 @@
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
-
+        /* Scroll progress indicator */
+        #scrollProgress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #0f3d7a 0%, #1e5a9e 100%);
+            z-index: 9999;
+            transition: width 0.1s ease-out;
+        }
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -38,6 +49,61 @@
                 opacity: 1;
             }
         }
+
+        /* Scroll to top button */
+        #scrollToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #0f3d7a 0%, #1e5a9e 100%);
+            color: white;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(15, 61, 122, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        #scrollToTop:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(15, 61, 122, 0.6);
+        }
+
+        #scrollToTop.show {
+            display: flex;
+        }
+
+        /* Lazy loading image fade-in */
+        img.lazy {
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+
+        img.lazy.loaded {
+            opacity: 1;
+        }
+
+        /* Counter animation */
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stat-number {
+            animation: countUp 1s ease-out;
+        }
+
         /* AUTOMATIC DARK MODE OVERRIDES */
         @media (prefers-color-scheme: dark) {
             /* Main Backgrounds & Text */
@@ -88,12 +154,57 @@
         html {
             scroll-behavior: smooth;
         }
+
+        /* Print styles */
+        @media print {
+            /* Hide interactive elements */
+            nav, footer, #scrollToTop, .no-print {
+                display: none !important;
+            }
+
+            /* Adjust page breaks */
+            section {
+                page-break-inside: avoid;
+            }
+
+            /* Reset colors for print */
+            body {
+                background: white !important;
+                color: black !important;
+            }
+
+            .bg-white, .bg-gray-50 {
+                background: white !important;
+            }
+
+            /* Ensure text is readable */
+            .text-slate-800, .text-gray-600, .text-primary {
+                color: black !important;
+            }
+
+            /* Remove shadows */
+            .shadow-sm, .shadow-md, .shadow-xl {
+                box-shadow: none !important;
+            }
+
+            /* Add borders for structure */
+            .border, .border-gray-100 {
+                border: 1px solid #ccc !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-slate-800 font-sans">
 
+    <!-- Scroll Progress Bar - ADD THIS -->
+    <div id="scrollProgress"></div>
+    <!-- Scroll to Top Button -->
+    <div id="scrollToTop" class="no-print">
+        <i class="fas fa-arrow-up text-lg"></i>
+    </div>
+
     <!-- Navigation -->
-    <nav class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300" id="navbar">
+    <nav class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300 no-print" id="navbar">
         <div class="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <div>
                 <h1 class="text-2xl font-bold text-primary tracking-tight" data-i18n="name">Steven Gaillard</h1>
@@ -102,14 +213,36 @@
             <div class="flex items-center gap-6">
                 <div class="hidden md:flex gap-6 text-sm font-medium text-gray-600">
                     <a href="#about" class="hover:text-primary transition" data-i18n="nav_about">About</a>
+                    <a href="#stats" class="hover:text-primary transition" data-i18n="nav_stats">Stats</a>
                     <a href="#education" class="hover:text-primary transition" data-i18n="nav_edu">Education</a>
                     <a href="#experience" class="hover:text-primary transition" data-i18n="nav_exp">Experience</a>
                     <a href="#projects" class="hover:text-primary transition" data-i18n="nav_proj">Projects</a>
                     <a href="#publications" class="hover:text-primary transition" data-i18n="nav_pubs">Research</a>
+                    <a href="#learning" class="hover:text-primary transition" data-i18n="nav_learning">Learning</a>
                 </div>
+                <button onclick="downloadPDF()" class="bg-green-600 hover:bg-green-700 text-white px-4 py-1.5 rounded-full text-xs font-bold transition shadow-sm flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i> <span data-i18n="btn_download">PDF</span>
+                </button>
                 <button onclick="toggleLanguage()" class="bg-primary hover:bg-blue-800 text-white px-4 py-1.5 rounded-full text-xs font-bold transition shadow-sm flex items-center gap-2">
                     <i class="fa-solid fa-globe"></i> <span id="lang-label">中文</span>
                 </button>
+                <!-- Mobile Menu Button - ADD THIS -->
+                <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-primary transition">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+            
+            <!-- Mobile Menu Dropdown - ADD THIS -->
+            <div id="mobileMenu" class="hidden md:hidden absolute top-full left-0 right-0 bg-white shadow-lg border-t">
+                <div class="flex flex-col py-4 px-4 space-y-3">
+                    <a href="#about" class="text-gray-600 hover:text-primary transition py-2" data-i18n="nav_about">About</a>
+                    <a href="#stats" class="text-gray-600 hover:text-primary transition py-2" data-i18n="nav_stats">Stats</a>
+                    <a href="#education" class="text-gray-600 hover:text-primary transition py-2" data-i18n="nav_edu">Education</a>
+                    <a href="#experience" class="text-gray-600 hover:text-primary transition py-2" data-i18n="nav_exp">Experience</a>
+                    <a href="#projects" class="text-gray-600 hover:text-primary transition py-2" data-i18n="nav_proj">Projects</a>
+                    <a href="#publications" class="text-gray-600 hover:text-primary transition py-2" data-i18n="nav_pubs">Research</a>
+                    <a href="#learning" class="text-gray-600 hover:text-primary transition py-2" data-i18n="nav_learning">Learning</a>
+                </div>
             </div>
         </div>
     </nav>
@@ -135,7 +268,7 @@
             <div class="relative group">
                 <div class="absolute inset-0 bg-primary rounded-full blur opacity-20 group-hover:opacity-30 transition duration-500"></div>
                 <div class="w-64 h-64 bg-slate-200 rounded-full border-8 border-white shadow-2xl overflow-hidden relative z-10">
-                    <img src="image1.jpg" alt="Steven Gaillard" class="w-full h-full object-cover">
+                    <img src="image1.jpg" alt="Steven Gaillard" class="w-full h-full object-cover lazy" loading="lazy">
                 </div>
             </div>
         </div>
@@ -143,6 +276,88 @@
 
     <!-- Main Content -->
     <main class="max-w-6xl mx-auto px-4 py-16 space-y-24">
+
+        <!-- Statistics Dashboard - NEW SECTION -->
+        <section id="stats" class="scroll-mt-24">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-10 w-1 bg-gradient-to-b from-primary to-blue-500 rounded-full"></div>
+                <h3 class="text-3xl font-bold text-slate-800" data-i18n="sec_stats">By the Numbers</h3>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Statistic 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-50 flex items-center justify-center group-hover:bg-blue-100 transition">
+                        <i class="fas fa-project-diagram text-2xl text-primary"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-primary mb-2 stat-number" data-count="7">7+</div>
+                    <div class="text-sm text-gray-600 font-medium" data-i18n="stat_projects">Major Projects</div>
+                </div>
+
+                <!-- Statistic 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-50 flex items-center justify-center group-hover:bg-purple-100 transition">
+                        <i class="fas fa-file-alt text-2xl text-purple-600"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-purple-600 mb-2 stat-number" data-count="7">7+</div>
+                    <div class="text-sm text-gray-600 font-medium" data-i18n="stat_publications">Publications</div>
+                </div>
+
+                <!-- Statistic 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-yellow-50 flex items-center justify-center group-hover:bg-yellow-100 transition">
+                        <i class="fas fa-trophy text-2xl text-yellow-600"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-yellow-600 mb-2 stat-number" data-count="9">9+</div>
+                    <div class="text-sm text-gray-600 font-medium" data-i18n="stat_awards">Awards & Honors</div>
+                </div>
+
+                <!-- Statistic 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-green-50 flex items-center justify-center group-hover:bg-green-100 transition">
+                        <i class="fas fa-graduation-cap text-2xl text-green-600"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-green-600 mb-2 stat-number" data-count="300000">300,000</div>
+                    <div class="text-sm text-gray-600 font-medium" data-i18n="stat_gpa">Lines of Code Written</div>
+                </div>
+
+                <!-- Statistic 5 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 flex items-center justify-center group-hover:bg-red-100 transition">
+                        <i class="fas fa-code text-2xl text-red-600"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-red-600 mb-2 stat-number" data-count="10">10+</div>
+                    <div class="text-sm text-gray-600 font-medium" data-i18n="stat_languages">Languages & Tools</div>
+                </div>
+
+                <!-- Statistic 6 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-cyan-50 flex items-center justify-center group-hover:bg-cyan-100 transition">
+                        <i class="fas fa-building text-2xl text-cyan-600"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-cyan-600 mb-2 stat-number" data-count="4">4</div>
+                    <div class="text-sm text-gray-600 font-medium" data-i18n="stat_companies">Companies Worked</div>
+                </div>
+
+                <!-- Statistic 7 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-orange-50 flex items-center justify-center group-hover:bg-orange-100 transition">
+                        <i class="fas fa-language text-2xl text-orange-600"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-orange-600 mb-2 stat-number" data-count="5">5+</div>
+                    <div class="text-sm text-gray-600 font-medium" data-i18n="stat_optimization">Languages Mastered</div>
+                </div>
+
+                <!-- Statistic 8 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 text-center hover:shadow-md transition group">
+                    <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-indigo-50 flex items-center justify-center group-hover:bg-indigo-100 transition">
+                        <i class="fas fa-users text-2xl text-indigo-600"></i>
+                    </div>
+                    <div class="text-4xl font-bold text-indigo-600 mb-2 stat-number" data-count="300">300+</div>
+                    <div class="text-sm text-gray-600 font-medium" data-i18n="stat_mentored">Students Mentored</div>
+                </div>
+            </div>
+        </section>
 
         <!-- Education -->
         <section id="education" class="scroll-mt-24">
@@ -263,7 +478,7 @@
                         </div>
                         <div class="text-right mt-2 md:mt-0">
                             <span class="text-sm text-gray-500 font-medium block" data-i18n="exp_fengyu_date">Jan. 2026 - Feb. 2026</span>
-                            <span class="text-xs text-gray-400 block mt-1"><i class="fa-solid fa-location-dot mr-1"></i> <span data-i18n="loc_yunlin_tw">Yunlin, Taiwan</span></span>
+                            <span class="text-xs text-gray-400 block mt-1"><i class="fa-solid fa-location-dot mr-1"></i> <span data-i18n="loc_yunlin_tw">Taipei & Yunlin, Taiwan</span></span>
                         </div>
                     </div>
 
@@ -738,7 +953,7 @@
                             Optimization of Earthquake Resistance Reinforced Concrete Portal Using Metaheuristic
                         </h4>
                         <p class="text-sm text-gray-600 mb-2">
-                            <span class="font-semibold">Petra Christian University</span> • March 2024
+                            <span class="font-semibold" data-i18n="edu_petra">Petra Christian University</span> • <span data-i18n="date_mar_2024">March 2024</span>
                         </p>
                         <p class="text-gray-700 text-sm leading-relaxed mb-3" data-i18n="edu_petra_b_thesis_desc">
                             Applied metaheuristic algorithms to enhance seismic performance of RC portal frames while minimizing costs. Validated against Indonesian codes (SNI 1726 & SNI 2847).
@@ -815,6 +1030,87 @@
                                 </p>
                             </div>
                             <div class="px-2 py-1 bg-purple-50 text-purple-600 text-xs font-bold rounded-full whitespace-nowrap" data-i18n="lbl_journal">JOURNAL</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Currently Learning Section - NEW SECTION -->
+        <section id="learning" class="scroll-mt-24">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-10 w-1 bg-gradient-to-b from-green-500 to-emerald-600 rounded-full"></div>
+                <h3 class="text-3xl font-bold text-slate-800" data-i18n="sec_learning">Currently Learning & Developing</h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Learning Item 1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition group">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
+                            <i class="fas fa-brain text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-slate-800 mb-2" data-i18n="learn_ai">Advanced Machine Learning & Deep Learning</h4>
+                            <p class="text-sm text-gray-600 mb-3" data-i18n="learn_ai_desc">Exploring neural networks, reinforcement learning, and their applications in structural engineering optimization.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full border border-blue-100">TensorFlow</span>
+                                <span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full border border-blue-100">PyTorch</span>
+                                <span class="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded-full border border-blue-100">Neural Networks</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Item 2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition group">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
+                            <i class="fas fa-cube text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-slate-800 mb-2" data-i18n="learn_dt">Digital Twin Technology</h4>
+                            <p class="text-sm text-gray-600 mb-3" data-i18n="learn_dt_desc">Developing real-time digital twins for infrastructure monitoring and predictive maintenance.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded-full border border-purple-100">IoT</span>
+                                <span class="text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded-full border border-purple-100">Real-time Analytics</span>
+                                <span class="text-xs bg-purple-50 text-purple-700 px-2 py-1 rounded-full border border-purple-100">BIM Integration</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Item 3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition group">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
+                            <i class="fas fa-code-branch text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-slate-800 mb-2" data-i18n="learn_cloud">Cloud Computing & Distributed Systems</h4>
+                            <p class="text-sm text-gray-600 mb-3" data-i18n="learn_cloud_desc">Building scalable engineering applications using cloud infrastructure and microservices architecture.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full border border-green-100">AWS</span>
+                                <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full border border-green-100">Docker</span>
+                                <span class="text-xs bg-green-50 text-green-700 px-2 py-1 rounded-full border border-green-100">Kubernetes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learning Item 4 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition group">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition">
+                            <i class="fas fa-language text-white text-xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="font-bold text-slate-800 mb-2" data-i18n="learn_chinese">Advanced Mandarin Chinese</h4>
+                            <p class="text-sm text-gray-600 mb-3" data-i18n="learn_chinese_desc">Improving fluency in Mandarin for academic collaboration and professional communication.</p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded-full border border-orange-100" data-i18n="learn_target">Target: HSK 5</span>
+                                <span class="text-xs bg-orange-50 text-orange-700 px-2 py-1 rounded-full border border-orange-100" data-i18n="learn_current">Current: A2-B1</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -902,7 +1198,7 @@
                                 <i class="fa-solid fa-medal text-lg"></i>
                             </div>
                             <div>
-                                <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_2">Valedictorian - 85th Graduation Ceremony</h5>
+                                <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_2">Valedictorian - 85th Graduation Ceremony (Best Graduate of the Year)</h5>
                                 <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_mar_2024">Mar. 2024</span>
                             </div>
                         </li>
@@ -911,7 +1207,7 @@
                                 <i class="fa-solid fa-medal text-lg"></i>
                             </div>
                             <div>
-                                <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_cumlaude">Cum Laude Representation</h5>
+                                <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_cumlaude">Cum Laude Representative</h5>
                                 <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_mar_2024">Mar. 2024</span>
                             </div>
                         </li>
@@ -920,7 +1216,7 @@
                                 <i class="fa-solid fa-medal text-lg"></i>
                             </div>
                             <div>
-                                <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_active">Active Graduate Representation</h5>
+                                <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_active">Active Graduate Representative</h5>
                                 <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_mar_2024">Mar. 2024</span>
                             </div>
                         </li>
@@ -956,7 +1252,7 @@
                                 <i class="fa-solid fa-award text-lg"></i>
                             </div>
                             <div>
-                                <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_benjamin">Ever-best Benjamin Gideon & Associates Scholarship</h5>
+                                <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_benjamin">Ever-best Benjamin Gideon & Associates Scholarship (Merit)</h5>
                                 <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_jun_2021">Jun. 2021</span>
                             </div>
                         </li>
@@ -983,10 +1279,10 @@
             <p class="text-gray-400 mb-8" data-i18n="footer_desc">Feel free to reach out for collaborations</p>
 
             <div class="flex justify-center gap-6 mb-8">
-                <a href="mailto:gacchuguts@gmail.com" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition" title="Email">
+                <button onclick="copyEmail()" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition" title="Copy Email">
                     <i class="fa-solid fa-envelope text-xl"></i>
-                </a>
-
+                </button>
+                
                 <a href="https://www.linkedin.com/in/steven-gaillard-301739218/" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition" title="LinkedIn">
                     <i class="fa-brands fa-linkedin-in text-xl"></i>
                 </a>
@@ -1001,6 +1297,12 @@
             </div>
 
             <div class="border-t border-white/10 pt-6">
+                <!-- ADD THIS -->
+                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="mb-4 text-gray-400 hover:text-white transition text-sm flex items-center gap-2 mx-auto">
+                    <i class="fas fa-arrow-up"></i>
+                    <span data-i18n="back_to_top">Back to Top</span>
+                </button>
+                
                 <p class="text-gray-500 text-xs" data-i18n="footer_copyright">
                     &copy; 2025 Steven Gaillard. Built with HTML & Tailwind CSS.
                 </p>
@@ -1008,31 +1310,70 @@
         </div>
     </footer>
 
-    <!-- Language Toggle Script -->
+    <!-- JavaScript -->
     <script>
         let currentLang = 'en';
 
         const translations = {
             en: {
                 name: "Steven Gaillard",
+                // English
+                back_to_top: "Back to Top",
+
                 sec_pubs: "Publications & Research",
                 // Badges
                 lbl_conference: "CONFERENCE",
                 lbl_journal: "JOURNAL",
-
+                nav_about: "About",
+                nav_stats: "Stats",
+                nav_edu: "Education",
+                nav_exp: "Experience",
+                nav_proj: "Projects",
+                nav_pubs: "Research",
+                nav_learning: "Learning",
                 // Footer
                 footer_title: "Let's Connect",
                 footer_desc: "Feel free to reach out for collaborations",
                 footer_copyright: "© 2025 Steven Gaillard. Built with HTML & Tailwind CSS.",
+
+                // NEW - Statistics Section
+                sec_stats: "By the Numbers",
+                nav_stats: "Stats",
+                stat_projects: "Major Projects",
+                stat_publications: "Publications",
+                stat_awards: "Awards & Honors",
+                stat_gpa: "Lines of Code Written",
+                stat_languages: "Languages & Tools",
+                stat_companies: "Companies Worked",
+                stat_optimization: "Languages Mastered",
+                stat_mentored: "Students Mentored",
+
+                // NEW - Learning Section
+                sec_learning: "Currently Learning & Developing",
+                nav_learning: "Learning",
+                learn_ai: "Advanced Machine Learning & Deep Learning",
+                learn_ai_desc: "Exploring neural networks, reinforcement learning, and their applications in structural engineering optimization.",
+                learn_dt: "Digital Twin Technology",
+                learn_dt_desc: "Developing real-time digital twins for infrastructure monitoring and predictive maintenance.",
+                learn_cloud: "Cloud Computing & Distributed Systems",
+                learn_cloud_desc: "Building scalable engineering applications using cloud infrastructure and microservices architecture.",
+                learn_chinese: "Advanced Mandarin Chinese",
+                learn_chinese_desc: "Improving fluency in Mandarin for academic collaboration and professional communication.",
+                learn_target: "Target: HSK 5",
+                learn_current: "Current: A2-B1",
+                reading_list: "Current Reading List",
+
+                // NEW - Download Button
+                btn_download: "PDF",
+
                 // NEW Keys for Thesis Labels
                 lbl_master_thesis: "MASTER'S THESIS",
                 lbl_bachelor_thesis: "BACHELOR'S THESIS",
                 role: "Civil & Structural Engineer | Ph.D. Candidate",
-                nav_about: "Profile", nav_edu: "Academic Background", nav_exp: "Professional Experience", nav_proj: "Engineering Portfolio", nav_pubs: "Publications",
                 hero_greeting: "Welcome, I am",
                 hero_desc: "Devoted Christian and Ph.D. Researcher in Civil and Construction Engineering at NTUST. Passionate about structural optimization, machine learning in engineering, and software development.",
                 btn_contact: "Get in Touch",
-                btn_launch: "Launch Application", // Added key for new buttons
+                btn_launch: "Launch Application",
                 sec_edu: "Academic Background",
                 edu_ntust: "National Taiwan University of Science and Technology",
                 edu_ntust_phd_deg: "Ph.D. Candidate in Civil & Construction Engineering",
@@ -1059,12 +1400,10 @@
                 exp_arch_desc2: "Executed precise calculations for load-bearing elements and foundation systems under senior supervision.",
                 lead_role: "Freshmen Mentor & Academic Advisor",
                 lead_date: "Jun. 2021 - Dec. 2023",
-                // Inside translations -> en
                 lead_desc1: "Facilitated the transition of incoming students into university life, fostering academic excellence and spiritual growth.",
-                lead_desc_faith: "Guided students in understanding how to live a meaningful and successful life through Christian values and principles.", // ADDED
+                lead_desc_faith: "Guided students in understanding how to live a meaningful and successful life through Christian values and principles.",
                 lead_desc2: "Delivered academic tutoring and strategic guidance to ensure students met rigorous university standards.",
                 sec_proj: "Engineering Portfolio",
-                // Projects
                 tag_eng_tool: "Engineering Tool",
                 tag_design_tool: "Design Tool",
                 tag_fullstack: "Full Stack",
@@ -1117,13 +1456,11 @@
                 feat_bim_2: "Clash detection visualization",
                 feat_bim_3: "VR/AR compatibility",
 
-                // Publications
                 pubs_conf_header: "Conference Papers & Articles",
                 edu_ntust_thesis_desc: "Novel hybrid framework combining PCA, t-SNE, and metaheuristic algorithms (SOS, PSO) to solve high-dimensional steel structure design problems, achieving up to 60% reduction in optimization time.",
                 edu_petra_m_thesis_desc: "An intensive research on NTUST's Master's Thesis, providing more dimensionality reduction methods",
                 edu_petra_b_thesis_desc: "Applied metaheuristic algorithms to enhance seismic performance of RC portal frames while minimizing costs. Validated against Indonesian codes (SNI 1726 & SNI 2847).",
 
-                // Languages
                 lang_indo: "Indonesian",
                 lang_malay: "Malaysian",
                 lang_eng: "English",
@@ -1132,12 +1469,10 @@
                 lang_prof_c2: "Professional (C2)",
                 lang_prof_c1: "Professional (C1)",
                 lang_elem: "Elementary (A2)",
-                // Locations
-                loc_yunlin_tw: "Yunlin, Taiwan",
+                loc_yunlin_tw: "Taipei & Yunlin, Taiwan",
                 loc_surabaya_id: "Surabaya, Indonesia",
                 loc_taipei_tw: "Taipei, Taiwan",
                 
-                // Specific Dates (Awards/Papers)
                 date_mar_2026: "Mar. 2026",
                 date_jul_2025: "Jul. 2025",
                 date_jun_2025: "Jun. 2025",
@@ -1146,44 +1481,21 @@
                 date_jun_2022: "Jun. 2022",
                 date_jun_2021: "Jun. 2021",
                 date_feb_2021: "Feb. 2021",
-                loc_surabaya: "Surabaya",
-                loc_indonesia: "Indonesia",
-                loc_taipei: "Taipei",
-                loc_taiwan: "Taiwan",
-                loc_yunlin: "Yunlin",
 
-                // Months
-                mon_jan: "Jan",
-                mon_feb: "Feb",
-                mon_mar: "Mar",
-                mon_apr: "Apr",
-                mon_may: "May",
-                mon_jun: "Jun",
-                mon_jul: "Jul",
-                mon_aug: "Aug",
-                mon_sep: "Sept",
-                mon_oct: "Oct",
-                mon_nov: "Nov",
-                mon_dec: "Dec",
-                proj_1_title: "Anchor Analysis Tool (ACI 318)",
-                proj_1_desc: "A comprehensive engineering suite for calculating anchor bolt capacity in concrete. Features include dynamic compliance analysis, automated PDF reporting with LaTeX rendering, and cloud-based data persistence.",
-                proj_2_title: "High-Dimensional Optimization",
-                proj_2_desc: "Development of a novel hybrid framework integrating dimensionality reduction techniques with metaheuristic algorithms to optimize complex steel structures.",
-                btn_view_proj: "View Details", btn_view_code: "Source Code",
                 btn_view_thesis: "Access Thesis",
-                sec_skills: "Technical Proficiencies", skill_prog: "Computational Engineering & Software", skill_lang: "Languages",
-                sec_awards: "Honors & Distinctions",
+                sec_skills: "Technical Proficiencies", 
+                skill_prog: "Computational Engineering & Software", 
+                skill_lang: "Languages",
+                sec_awards: "Honors & Awards",
                 award_1: "NSTC Research Scholarship",
-                award_2: "Valedictorian - 85th Graduation Ceremony",
-                award_cumlaude: "Cum Laude Distinction",
+                award_2: "Valedictorian - 85th Graduation Ceremony (Best Graduate of the Year)",
+                award_cumlaude: "Cum Laude Representative",
                 award_active: "Active Graduate Representative",
-                award_best: "Top Civil Engineering Graduate (Class of 2020)",
+                award_best: "Best Civil Engineering Graduate",
                 award_3: "PT Adaro Indonesia Scholarship Grant",
                 award_4: "1st Place - Civil Analysis & Photography Competition",
-                award_benjamin: "Benjamin Gideon & Associates Scholarship (Merit)",
+                award_benjamin: "Ever-best Benjamin Gideon & Associates Scholarship (Merit)",
                 award_acad: "Academic Achievement Scholarship",
-                footer_title: "Contact Information",
-                nav_pubs: "Publications",
                 exp_fengyu_role: "Structural Engineering Intern & Researcher",
                 exp_fengyu_date: "Jan. 2026 - Feb. 2026",
                 exp_fengyu_desc1: "Developed a suite of 4 web-based structural analysis tools (Anchor, RC Slab, RC Column, WebFEA) using React.js and Three.js to automate engineering calculations.",
@@ -1191,20 +1503,55 @@
                 exp_fengyu_desc3: "Authored a comparative technical report analyzing construction methodologies, automation, and safety regulations between Taiwan and Indonesia.",
             },
             zh: {
-                name: "曾志强 (Steven Gaillard)",
+                name: "曾志強 (Steven Gaillard)", 
+                back_to_top: "返回頂部",
                 sec_pubs: "研究著作與出版",
                 lbl_conference: "會議論文",
                 lbl_journal: "期刊文章",
-
-                // Footer
+                nav_about: "關於我",
+                nav_stats: "統計",
+                nav_edu: "學歷",
+                nav_exp: "工作經驗",
+                nav_proj: "專案作品",
+                nav_pubs: "研究成果",
+                nav_learning: "學習",
                 footer_title: "與我聯繫",
                 footer_desc: "歡迎隨時聯繫洽談合作機會",
                 footer_copyright: "© 2025 Steven Gaillard. 使用 HTML 與 Tailwind CSS 建置。",
-                // NEW Keys for Thesis Labels
+
+                // NEW - Statistics Section (Chinese)
+                sec_stats: "數據統計",
+                nav_stats: "統計",
+                stat_projects: "重要專案",
+                stat_publications: "發表論文",
+                stat_awards: "獎項與榮譽",
+                stat_gpa: "編寫的程式碼行數",
+                stat_languages: "語言與工具",
+                stat_companies: "工作單位",
+                stat_optimization: "語言能力",
+                stat_mentored: "輔導學生",
+
+                // NEW - Learning Section (Chinese)
+                sec_learning: "目前學習與發展",
+                nav_learning: "學習",
+                learn_ai: "進階機器學習與深度學習",
+                learn_ai_desc: "探索神經網路、強化學習及其在結構工程優化中的應用。",
+                learn_dt: "數位雙生技術",
+                learn_dt_desc: "開發用於基礎設施監控和預測性維護的即時數位雙生系統。",
+                learn_cloud: "雲端運算與分散式系統",
+                learn_cloud_desc: "使用雲端基礎架構和微服務架構建置可擴展的工程應用程式。",
+                learn_chinese: "進階中文",
+                learn_chinese_desc: "提升中文流利度，用於學術合作和專業溝通。",
+                learn_target: "目標：HSK 5",
+                learn_current: "目前：A2-B1",
+                reading_list: "目前閱讀清單",
+
+                // NEW - Download Button
+                btn_download: "PDF",
+
                 lbl_master_thesis: "碩士論文",
                 lbl_bachelor_thesis: "學士論文",
                 role: "土木與結構工程師",
-                nav_about: "關於我", nav_edu: "學歷", nav_exp: "工作經驗", nav_proj: "專案作品",
                 hero_greeting: "你好，我是",
                 hero_desc: "虔誠基督徒，目前為國立臺灣科技大學土木與建築工程博士生。熱衷於結構優化、機器學習在工程中的應用以及軟體開發。",
                 btn_contact: "聯絡我",
@@ -1232,7 +1579,7 @@
                 lead_role: "新生導師",
                 lead_date: "2021年6月 - 2023年12月",
                 lead_desc1: "指導新生適應大學生活，幫助其在個人、學術和靈性方面成長。",
-                lead_desc_faith: "引導學生透過基督信仰價值觀與原則，活出有意義且成功的人生。", // ADDED
+                lead_desc_faith: "引導學生透過基督信仰價值觀與原則，活出有意義且成功的人生。",
                 lead_desc2: "提供學術輔導和支持，幫助新生適應大學的學術要求。",
                 sec_proj: "工程作品集",
                 tag_eng_tool: "工程工具",
@@ -1287,13 +1634,11 @@
                 feat_bim_2: "衝突檢測視覺化",
                 feat_bim_3: "VR/AR 相容性",
 
-                // Publications
                 pubs_conf_header: "會議論文與期刊文章",
                 edu_ntust_thesis_desc: "結合主成分分析(PCA)、t-SNE與元啟發式演算法(SOS, PSO)的新穎混合框架，用於解決高維鋼結構設計問題，優化時間減少高達60%。",
                 edu_petra_m_thesis_desc: "針對臺科大碩士論文的深入研究，提供更多維度縮減方法。",
                 edu_petra_b_thesis_desc: "應用元啟發式演算法提升鋼筋混凝土門型構架的抗震性能並最小化成本。已通過印尼規範 (SNI 1726 & SNI 2847) 驗證。",
 
-                // Languages
                 lang_indo: "印尼語",
                 lang_malay: "馬來語",
                 lang_eng: "英語",
@@ -1302,12 +1647,10 @@
                 lang_prof_c2: "專業級 (C2)",
                 lang_prof_c1: "專業級 (C1)",
                 lang_elem: "初級 (A2)",
-                // Locations
-                loc_yunlin_tw: "台灣雲林",
+                loc_yunlin_tw: "台灣台北&雲林",
                 loc_surabaya_id: "印尼泗水",
                 loc_taipei_tw: "台灣台北",
 
-                // Specific Dates (Awards/Papers)
                 date_mar_2026: "2026年3月",
                 date_jul_2025: "2025年7月",
                 date_jun_2025: "2025年6月",
@@ -1316,44 +1659,21 @@
                 date_jun_2022: "2022年6月",
                 date_jun_2021: "2021年6月",
                 date_feb_2021: "2021年2月",
-                loc_surabaya: "泗水",
-                loc_indonesia: "印尼",
-                loc_taipei: "台北",
-                loc_taiwan: "台灣",
-                loc_yunlin: "雲林",
 
-                // Months
-                mon_jan: "1月",
-                mon_feb: "2月",
-                mon_mar: "3月",
-                mon_apr: "4月",
-                mon_may: "5月",
-                mon_jun: "6月",
-                mon_jul: "7月",
-                mon_aug: "8月",
-                mon_sep: "9月",
-                mon_oct: "10月",
-                mon_nov: "11月",
-                mon_dec: "12月",
-                proj_1_title: "錨栓分析工具 (ACI 318)",
-                proj_1_desc: "專業工程工具，用於計算混凝土錨栓承載力。具備動態分析、含公式的PDF報告生成及雲端資料庫儲存功能。",
-                proj_2_title: "高維度結構優化",
-                proj_2_desc: "結合維度縮減與元啟發式演算法的混合框架，用於優化鋼結構設計。",
-                btn_view_proj: "查看專案", btn_view_code: "查看代碼",
                 btn_view_thesis: "查看論文",
-                sec_skills: "技能", skill_prog: "程式設計與軟體", skill_lang: "語言能力",
+                sec_skills: "技能", 
+                skill_prog: "程式設計與軟體", 
+                skill_lang: "語言能力",
                 sec_awards: "獎項與榮譽",
                 award_1: "NSTC 獎學金",
                 award_2: "第85屆畢業典禮致辭代表 (Valedictorian)",
                 award_cumlaude: "第85屆畢業典禮榮譽畢業代表",
                 award_active: "第85屆畢業典禮活躍畢業生代表",
-                award_best: "2020級最佳土木工程畢業生",
+                award_best: "2020級最佳土木工程畢業生 (優點)",
                 award_3: "PT Adaro Indonesia 獎學金",
                 award_4: "土木分析與攝影比賽 第一名",
                 award_benjamin: "Benjamin Gideon & Associates 獎學金",
                 award_acad: "學業成就獎學金",
-                footer_title: "聯絡資訊",
-                nav_pubs: "研究成果",
                 exp_arch_role: "結構工程師",
                 exp_arch_date: "2023年6月 - 2023年12月",
                 exp_arch_desc1: "使用 AutoCAD 和 SAP2000 協助住宅與商業建築的結構設計與分析。",
@@ -1370,9 +1690,8 @@
             currentLang = currentLang === 'en' ? 'zh' : 'en';
             document.getElementById('lang-label').innerText = currentLang === 'en' ? '中文' : 'EN';
 
-            // Fade effect
             document.body.classList.remove('fade-in');
-            void document.body.offsetWidth; // trigger reflow
+            void document.body.offsetWidth;
             document.body.classList.add('fade-in');
 
             document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -1382,6 +1701,125 @@
                 }
             });
         }
+        function copyEmail() {
+            navigator.clipboard.writeText('gacchuguts@gmail.com').then(() => {
+                const toast = document.createElement('div');
+                toast.className = 'fixed bottom-24 right-8 bg-primary text-white px-4 py-2 rounded-lg shadow-lg z-50';
+                toast.textContent = 'Email copied to clipboard!';
+                document.body.appendChild(toast);
+                setTimeout(() => toast.remove(), 3000);
+            });
+        }
+        // Scroll to top functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+            
+            // Update scroll progress - ADD THIS
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scrollProgress').style.width = scrolled + '%';
+        });
+        // Lazy loading images
+        document.addEventListener('DOMContentLoaded', () => {
+            const lazyImages = document.querySelectorAll('img.lazy');
+            
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            lazyImages.forEach(img => imageObserver.observe(img));
+        });
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+
+        // PDF Download functionality
+        function downloadPDF() {
+            // Determine filename based on current language
+            const fileName = currentLang === 'zh' 
+                ? 'CV - Steven Gaillard - CN.pdf' 
+                : 'CV - Steven Gaillard - EN.pdf';
+
+            // Create a temporary link to trigger download
+            const link = document.createElement('a');
+            link.href = fileName;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Animate statistics counters
+        function animateCounter(el) {
+            const target = parseInt(el.getAttribute('data-count'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    el.textContent = target + '+';
+                    clearInterval(timer);
+                } else {
+                    el.textContent = Math.floor(current) + '+';
+                }
+            }, 16);
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counters = entry.target.querySelectorAll('[data-count]');
+                    counters.forEach(counter => animateCounter(counter));
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const statsSection = document.getElementById('stats');
+            if (statsSection) {
+                statsObserver.observe(statsSection);
+            }
+        });
     </script>
 </body>
 </html>
