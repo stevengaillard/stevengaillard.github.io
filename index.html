@@ -5,15 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Steven Gaillard - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
+            darkMode: 'media',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
                     colors: {
-                        primary: '#004a99',
-                        secondary: '#f0f2f5',
-                        dark: '#1e293b',
+                        primary: '#0f3d7a', // A deeper, more corporate blue
+                        secondary: '#f8fafc',
+                        dark: '#0f172a',
                     }
                 }
             }
@@ -33,7 +38,53 @@
                 opacity: 1;
             }
         }
+        /* AUTOMATIC DARK MODE OVERRIDES */
+        @media (prefers-color-scheme: dark) {
+            /* Main Backgrounds & Text */
+            body, .bg-gray-50, .bg-slate-50 {
+                background-color: #0f172a !important; /* Dark Slate */
+                color: #e2e8f0 !important;
+            }
+            
+            /* Cards & Navbar */
+            .bg-white {
+                background-color: #1e293b !important; /* Lighter Dark Slate */
+                border-color: #334155 !important;
+                color: #f1f5f9 !important;
+            }
 
+            /* Typography Overrides */
+            .text-slate-800, .text-slate-900, .text-gray-900 {
+                color: #f1f5f9 !important; /* White text */
+            }
+            .text-gray-600, .text-gray-500, .text-gray-700 {
+                color: #94a3b8 !important; /* Light Gray text */
+            }
+            .text-primary {
+                color: #60a5fa !important; /* Lighter Blue for visibility */
+            }
+
+            /* Badge & Icon Backgrounds (Dimming the bright areas) */
+            .bg-blue-50 { background-color: #172554 !important; color: #93c5fd !important; }
+            .bg-emerald-50 { background-color: #064e3b !important; color: #6ee7b7 !important; }
+            .bg-pink-50 { background-color: #831843 !important; color: #f9a8d4 !important; }
+            .bg-orange-50 { background-color: #7c2d12 !important; color: #fdba74 !important; }
+            .bg-purple-50, .bg-violet-50 { background-color: #4c1d95 !important; color: #c4b5fd !important; }
+            .bg-red-50 { background-color: #7f1d1d !important; color: #fca5a5 !important; }
+            .bg-cyan-50 { background-color: #164e63 !important; color: #67e8f9 !important; }
+            .bg-yellow-50 { background-color: #713f12 !important; color: #fde047 !important; }
+            .bg-gray-100 { background-color: #334155 !important; color: #e2e8f0 !important; }
+
+            /* Interactive Elements */
+            .shadow-md, .shadow-xl {
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3) !important;
+            }
+            input, select, textarea {
+                background-color: #334155 !important;
+                border-color: #475569 !important;
+                color: white !important;
+            }
+        }
         html {
             scroll-behavior: smooth;
         }
@@ -77,17 +128,8 @@
                     </h2>
                 </div>
                 <p class="text-lg text-gray-600 max-w-xl leading-relaxed" data-i18n="hero_desc">
-                    PhD Student in Civil and Construction Engineering at NTUST. Passionate about structural optimization, machine learning in engineering, and software development.
+                    Devoted Christian and Ph.D. Researcher in Civil and Construction Engineering at NTUST. Deeply passionate about digital twins, AI & machine learning in engineering, and software development.
                 </p>
-
-                <div class="flex flex-wrap gap-4 pt-4">
-                    <a href="mailto:gacchuguts@gmail.com" class="bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-800 transition shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                        <i class="fa-solid fa-envelope mr-2"></i> <span data-i18n="btn_contact">Contact Me</span>
-                    </a>
-                    <a href="tel:+886987067808" class="text-gray-500 hover:text-primary px-4 py-3 transition text-sm flex items-center">
-                        <i class="fa-solid fa-phone mr-2"></i> +886 987 067 808 / +62 89 533 577 4359
-                    </a>
-                </div>
             </div>
 
             <div class="relative group">
@@ -118,7 +160,7 @@
                             <div>
                                 <h4 class="text-xl font-bold text-slate-900 group-hover:text-primary transition" data-i18n="edu_ntust">National Taiwan University of Science and Technology</h4>
                                 <p class="text-primary font-medium text-lg" data-i18n="edu_ntust_phd_deg">PhD Student in Civil and Construction Engineering</p>
-                                <p class="text-sm text-gray-500 mt-1 flex items-center"><i class="fa-solid fa-location-dot mr-2"></i> Taipei, Taiwan</p>
+                                <p class="text-sm text-gray-500 mt-1 flex items-center"><i class="fa-solid fa-location-dot mr-2"></i> <span data-i18n="loc_taipei_tw">Taipei, Taiwan</span></p>
                             </div>
                             <span class="bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-full border border-blue-100 whitespace-nowrap" data-i18n="edu_ntust_phd_date">Sept. 2025 - Present</span>
                         </div>
@@ -139,7 +181,7 @@
                             <div>
                                 <h4 class="text-xl font-bold text-slate-900 group-hover:text-primary transition" data-i18n="edu_ntust">National Taiwan University of Science and Technology</h4>
                                 <p class="text-primary font-medium text-lg" data-i18n="edu_ntust_deg">M.Sc. in Civil and Construction Engineering</p>
-                                <p class="text-sm text-gray-500 mt-1 flex items-center"><i class="fa-solid fa-location-dot mr-2"></i> Taipei, Taiwan</p>
+                                <p class="text-sm text-gray-500 mt-1 flex items-center"><i class="fa-solid fa-location-dot mr-2"></i> <span data-i18n="loc_taipei_tw">Taipei, Taiwan</span></p>
                             </div>
                             <span class="bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full border border-gray-200 whitespace-nowrap" data-i18n="edu_ntust_date">Sept. 2024 - Jul. 2025</span>
                         </div>
@@ -163,7 +205,7 @@
                             <div>
                                 <h4 class="text-xl font-bold text-slate-900 group-hover:text-primary transition" data-i18n="edu_petra">Petra Christian University</h4>
                                 <p class="text-primary font-medium text-lg" data-i18n="edu_petra_m_deg">M.Sc. in Civil Engineering</p>
-                                <p class="text-sm text-gray-500 mt-1 flex items-center"><i class="fa-solid fa-location-dot mr-2"></i> Surabaya, Indonesia</p>
+                                <p class="text-sm text-gray-500 mt-1 flex items-center"><i class="fa-solid fa-location-dot mr-2"></i> <span data-i18n="loc_surabaya_id">Surabaya, Indonesia</span></p>
                             </div>
                             <span class="bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full border border-gray-200 whitespace-nowrap" data-i18n="edu_petra_m_date">Mar. 2024 - Jul. 2025</span>
                         </div>
@@ -184,6 +226,7 @@
                             <div>
                                 <h4 class="text-xl font-bold text-slate-900 group-hover:text-primary transition" data-i18n="edu_petra">Petra Christian University</h4>
                                 <p class="text-primary font-medium text-lg" data-i18n="edu_petra_b_deg">B.Eng. in Civil Engineering</p>
+                                <p class="text-sm text-gray-500 mt-1 flex items-center"><i class="fa-solid fa-location-dot mr-2"></i> <span data-i18n="loc_surabaya_id">Surabaya, Indonesia</span></p>
                             </div>
                             <span class="bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full border border-gray-200 whitespace-nowrap" data-i18n="edu_petra_b_date">Aug. 2020 - Mar. 2024</span>
                         </div>
@@ -210,6 +253,35 @@
             </div>
 
             <div class="space-y-6">
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition">
+                    <div class="absolute top-0 left-0 w-1.5 h-full bg-orange-500 group-hover:w-2 transition-all"></div>
+
+                    <div class="flex flex-col md:flex-row justify-between items-start mb-4">
+                        <div>
+                            <h4 class="text-2xl font-bold text-slate-800">FENGYU GROUP (豐譽企業團隊)</h4>
+                            <p class="text-primary font-semibold text-lg mt-1" data-i18n="exp_fengyu_role">Structural Engineering Intern & Researcher</p>
+                        </div>
+                        <div class="text-right mt-2 md:mt-0">
+                            <span class="text-sm text-gray-500 font-medium block" data-i18n="exp_fengyu_date">Jan. 2026 - Feb. 2026</span>
+                            <span class="text-xs text-gray-400 block mt-1"><i class="fa-solid fa-location-dot mr-1"></i> <span data-i18n="loc_yunlin_tw">Yunlin, Taiwan</span></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 space-y-3">
+                        <div class="flex gap-3">
+                            <div class="mt-1.5 w-1.5 h-1.5 bg-orange-500 rounded-full flex-shrink-0"></div>
+                            <p class="text-gray-600 text-sm leading-relaxed" data-i18n="exp_fengyu_desc1">Developed a suite of 4 web-based structural analysis tools (Anchor, RC Slab, RC Column, WebFEA) using React.js and Three.js to automate engineering calculations.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="mt-1.5 w-1.5 h-1.5 bg-orange-500 rounded-full flex-shrink-0"></div>
+                            <p class="text-gray-600 text-sm leading-relaxed" data-i18n="exp_fengyu_desc2">Conducted on-site inspections at the Yunlin construction site, auditing QA protocols, safety standards, and formwork systems.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="mt-1.5 w-1.5 h-1.5 bg-orange-500 rounded-full flex-shrink-0"></div>
+                            <p class="text-gray-600 text-sm leading-relaxed" data-i18n="exp_fengyu_desc3">Authored a comparative technical report analyzing construction methodologies, automation, and safety regulations between Taiwan and Indonesia.</p>
+                        </div>
+                    </div>
+                </div>
                 <!-- Work Experience -->
                 <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition">
                     <div class="absolute top-0 left-0 w-1.5 h-full bg-primary group-hover:w-2 transition-all"></div>
@@ -221,7 +293,7 @@
                         </div>
                         <div class="text-right mt-2 md:mt-0">
                             <span class="text-sm text-gray-500 font-medium block" data-i18n="exp_date">Dec. 2023 - Jul. 2024</span>
-                            <span class="text-xs text-gray-400 block mt-1"><i class="fa-solid fa-location-dot mr-1"></i> Surabaya, Indonesia</span>
+                            <span class="text-xs text-gray-400 block mt-1"><i class="fa-solid fa-location-dot mr-1"></i> <span data-i18n="loc_surabaya_id">Surabaya, Indonesia</span></span>
                         </div>
                     </div>
 
@@ -249,8 +321,8 @@
                             <p class="text-primary font-semibold text-lg mt-1" data-i18n="exp_arch_role">Structural Engineer</p>
                         </div>
                         <div class="text-right mt-2 md:mt-0">
-                            <span class="text-sm text-gray-500 font-medium block" data-i18n="exp_arch_date">Jun. 2023 - Dec. 2023</span>
-                            <span class="text-xs text-gray-400 block mt-1"><i class="fa-solid fa-location-dot mr-1"></i> Surabaya, Indonesia</span>
+                            <span class="text-sm text-gray-500 font-medium block" data-i18n="exp_date">Dec. 2023 - Jul. 2024</span>
+                            <span class="text-xs text-gray-400 block mt-1"><i class="fa-solid fa-location-dot mr-1"></i> <span data-i18n="loc_surabaya_id">Surabaya, Indonesia</span></span>
                         </div>
                     </div>
 
@@ -276,7 +348,7 @@
                         </div>
                         <div class="text-right mt-2 md:mt-0">
                             <span class="text-sm text-gray-500 font-medium block" data-i18n="lead_date">Jun. 2021 - Dec. 2023</span>
-                            <span class="text-xs text-gray-400 block mt-1"><i class="fa-solid fa-location-dot mr-1"></i> Surabaya, Indonesia</span>
+                            <span class="text-xs text-gray-400 block mt-1"><i class="fa-solid fa-location-dot mr-1"></i> <span data-i18n="loc_surabaya_id">Surabaya, Indonesia</span></span>
                         </div>
                     </div>
 
@@ -284,6 +356,10 @@
                         <div class="flex gap-3">
                             <div class="mt-1.5 w-1.5 h-1.5 bg-slate-400 rounded-full flex-shrink-0"></div>
                             <p class="text-gray-600 text-sm leading-relaxed" data-i18n="lead_desc1">Guided new students in adapting to university life, fostering personal, academic, and spiritual growth.</p>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="mt-1.5 w-1.5 h-1.5 bg-slate-400 rounded-full flex-shrink-0"></div>
+                            <p class="text-gray-600 text-sm leading-relaxed" data-i18n="lead_desc_faith">Guided students in understanding how to live a meaningful and successful life through Christian values and principles.</p>
                         </div>
                         <div class="flex gap-3">
                             <div class="mt-1.5 w-1.5 h-1.5 bg-slate-400 rounded-full flex-shrink-0"></div>
@@ -302,7 +378,122 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col group">
+                    <div class="h-2 bg-gradient-to-r from-red-600 to-rose-600"></div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="p-3 bg-red-50 rounded-lg text-red-600">
+                                <i class="fa-solid fa-laptop-code text-2xl"></i>
+                            </div>
+                            <span class="bg-red-100 text-red-700 text-xs font-bold px-2 py-1 rounded uppercase" data-i18n="tag_eng_tool">Engineering Tool</span>
+                        </div>
 
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-red-600 transition" data-i18n="proj_webfea_title">WebFEA: 2D Structural Analysis</h4>
+
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed" data-i18n="proj_webfea_desc">
+                            A browser-based Finite Element Analysis (FEA) solver for structural frames. Performs matrix structural analysis to calculate reactions, displacements, and internal forces optimized for both mobile and computer.
+                        </p>
+
+                        <div class="bg-red-50 p-3 rounded-lg mb-4 text-xs">
+                            <p class="font-semibold mb-1 text-gray-700" data-i18n="lbl_capabilities">Capabilities:</p>
+                            <ul class="list-disc list-inside space-y-0.5 text-gray-700">
+                                <li data-i18n="feat_webfea_1">2D Frame Analysis</li>
+                                <li data-i18n="feat_webfea_2">Stiffness Matrix Method</li>
+                                <li data-i18n="feat_webfea_3">Real-time Visualization</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-t border-gray-100 pt-4 mt-auto">
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">JavaScript</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Canvas API</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Complex Algebra</span>
+                            </div>
+                            <a href="https://stevengaillard.github.io/WebFEA/" target="_blank" class="inline-flex items-center text-sm font-medium text-white bg-red-600 px-4 py-2 rounded-md hover:bg-red-700 transition shadow-sm hover:shadow-md">
+                                <span data-i18n="btn_launch">Launch Application</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col group">
+                    <div class="h-2 bg-gradient-to-r from-blue-400 to-cyan-500"></div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="p-3 bg-cyan-50 rounded-lg text-cyan-600">
+                                <i class="fa-solid fa-layer-group text-2xl"></i>
+                            </div>
+                            <span class="bg-cyan-100 text-cyan-700 text-xs font-bold px-2 py-1 rounded uppercase" data-i18n="tag_design_tool">Design Tool</span>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-cyan-600 transition" data-i18n="proj_slab_title">RC Slab Design Tool</h4>
+
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed" data-i18n="proj_slab_desc">
+                            Automated reinforced concrete slab design calculator. Determines reinforcement requirements based on load inputs and code constraints (ACI/SNI).
+                        </p>
+
+                        <div class="bg-cyan-50 p-3 rounded-lg mb-4 text-xs">
+                            <p class="font-semibold mb-1 text-gray-700" data-i18n="lbl_features">Key Features:</p>
+                            <ul class="list-disc list-inside space-y-0.5 text-gray-700">
+                                <li data-i18n="feat_slab_1">Moment Calculation</li>
+                                <li data-i18n="feat_slab_2">Reinforcement Scheduling</li>
+                                <li data-i18n="feat_slab_3">Code Compliance Check</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-t border-gray-100 pt-4 mt-auto">
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">JavaScript</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">CSS</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">HTML</span>
+                            </div>
+                            <a href="https://stevengaillard.github.io/slab/" target="_blank" class="inline-flex items-center text-sm font-medium text-white bg-cyan-600 px-4 py-2 rounded-md hover:bg-cyan-700 transition shadow-sm hover:shadow-md">
+                                <span data-i18n="btn_launch">Launch Application</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col group">
+                    <div class="h-2 bg-gradient-to-r from-violet-600 to-purple-600"></div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex justify-between items-start mb-3">
+                            <div class="p-3 bg-violet-50 rounded-lg text-violet-600">
+                                <i class="fa-solid fa-shapes text-2xl"></i>
+                            </div>
+                            <span class="bg-violet-100 text-violet-700 text-xs font-bold px-2 py-1 rounded uppercase" data-i18n="tag_design_tool">Design Tool</span>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-violet-600 transition" data-i18n="proj_col_title">RC Biaxial Column Design Tool</h4>
+
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed" data-i18n="proj_col_desc">
+                            Interactive tool for generating 3D interaction diagrams for reinforced concrete columns under biaxial bending and axial loads.
+                        </p>
+
+                        <div class="bg-violet-50 p-3 rounded-lg mb-4 text-xs">
+                            <p class="font-semibold mb-1 text-gray-700" data-i18n="lbl_features">Features:</p>
+                            <ul class="list-disc list-inside space-y-0.5 text-gray-700">
+                                <li data-i18n="feat_col_1">P-M-M Interaction Surface</li>
+                                <li data-i18n="feat_col_2">Cross-section Analysis</li>
+                                <li data-i18n="feat_col_3">3D Visualization</li>
+                            </ul>
+                        </div>
+
+                        <div class="border-t border-gray-100 pt-4 mt-auto">
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">JavaScript</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Plotly.js</span>
+                                <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Math.js</span>
+                            </div>
+                            <a href="https://stevengaillard.github.io/biaxial-column/" target="_blank" class="inline-flex items-center text-sm font-medium text-white bg-violet-600 px-4 py-2 rounded-md hover:bg-violet-700 transition shadow-sm hover:shadow-md">
+                                <span data-i18n="btn_launch">Launch Application</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
                 <!-- Project 1: Anchor Analysis Tool -->
                 <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 flex flex-col group">
                     <div class="h-2 bg-gradient-to-r from-primary to-blue-500"></div>
@@ -312,22 +503,22 @@
                                 <i class="fa-solid fa-anchor text-2xl"></i>
                             </div>
                             <div class="flex gap-2 items-center">
-                                <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded uppercase">Web App</span>
+                                <span class="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded uppercase" data-i18n="tag_design_tool">Design Tool</span>
                             </div>
                         </div>
 
-                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-primary transition">Anchor Analysis Tool (ACI 318-19)</h4>
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-primary transition" data-i18n="proj_anchor_title">Anchor Design Tool (ACI 318-19)</h4>
 
-                        <p class="text-gray-600 text-sm mb-3 leading-relaxed">
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed" data-i18n="proj_anchor_desc">
                             Professional engineering tool for calculating anchor bolt capacity in concrete per ACI 318-19 standards. Features dynamic analysis, PDF reports with LaTeX formulas, and Firebase cloud storage.
                         </p>
 
                         <div class="bg-blue-50 p-3 rounded-lg mb-4 text-xs">
-                            <p class="font-semibold mb-1 text-gray-700">Key Features:</p>
+                            <p class="font-semibold mb-1 text-gray-700" data-i18n="lbl_features">Key Features:</p>
                             <ul class="list-disc list-inside space-y-0.5 text-gray-700">
-                                <li>Real-time compliance checking</li>
-                                <li>Multi-language support (EN/ZH)</li>
-                                <li>Professional PDF reports</li>
+                                <li data-i18n="feat_anchor_1">Real-time compliance checking</li>
+                                <li data-i18n="feat_anchor_2">Multi-language support (EN/ZH)</li>
+                                <li data-i18n="feat_anchor_3">Professional PDF reports</li>
                             </ul>
                         </div>
 
@@ -339,9 +530,9 @@
                                 <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">jsPDF</span>
                             </div>
                             <div class="flex gap-3">
-                                <a href="https://stevengaillard.github.io/FengYu/" target="_blank" class="inline-flex items-center text-sm font-bold text-primary hover:text-blue-800 transition">
-                                    <span>Go Now!</span>
-                                    <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                                <a href="https://stevengaillard.github.io/FengYu/" target="_blank" class="inline-flex items-center text-sm font-medium text-white bg-primary px-4 py-2 rounded-md hover:bg-blue-900 transition shadow-sm hover:shadow-md">
+                                    <span data-i18n="btn_launch">Launch Application</span>
+                                    <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
                                 </a>
                             </div>
                         </div>
@@ -356,21 +547,21 @@
                             <div class="p-3 bg-emerald-50 rounded-lg text-emerald-600">
                                 <i class="fa-solid fa-tasks text-2xl"></i>
                             </div>
-                            <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded uppercase">Full Stack</span>
+                            <span class="bg-emerald-100 text-emerald-700 text-xs font-bold px-2 py-1 rounded uppercase" data-i18n="tag_fullstack">Full Stack</span>
                         </div>
 
-                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-emerald-600 transition">Construction Project Management</h4>
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-emerald-600 transition" data-i18n="proj_pm_title">Construction Project Management</h4>
 
-                        <p class="text-gray-600 text-sm mb-3 leading-relaxed">
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed" data-i18n="proj_pm_desc">
                             Web-based platform for construction firms with real-time collaboration, document tracking, budget monitoring, and timeline visualization.
                         </p>
 
                         <div class="bg-emerald-50 p-3 rounded-lg mb-4 text-xs">
-                            <p class="font-semibold mb-1 text-gray-700">Core Capabilities:</p>
+                            <p class="font-semibold mb-1 text-gray-700" data-i18n="lbl_core_caps">Core Capabilities:</p>
                             <ul class="list-disc list-inside space-y-0.5 text-gray-700">
-                                <li>Task & milestone tracking</li>
-                                <li>Budget & resource management</li>
-                                <li>Document version control</li>
+                                <li data-i18n="feat_pm_1">Task & milestone tracking</li>
+                                <li data-i18n="feat_pm_2">Budget & resource management</li>
+                                <li data-i18n="feat_pm_3">Document version control</li>
                             </ul>
                         </div>
 
@@ -380,9 +571,9 @@
                                 <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Node.js</span>
                                 <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">MongoDB</span>
                             </div>
-                            <a href="http://yo.ct.ntust.edu.tw:20251/" target="_blank" class="inline-flex items-center text-sm font-bold text-primary hover:text-blue-800 transition">
-                                <span>Go Now!</span>
-                                <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                            <a href="http://yo.ct.ntust.edu.tw:20251/" target="_blank" class="inline-flex items-center text-sm font-medium text-white bg-emerald-600 px-4 py-2 rounded-md hover:bg-emerald-700 transition shadow-sm hover:shadow-md">
+                                <span data-i18n="btn_launch">Launch Application</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
                             </a>
                         </div>
                     </div>
@@ -396,21 +587,21 @@
                             <div class="p-3 bg-pink-50 rounded-lg text-pink-600">
                                 <i class="fa-solid fa-chart-line text-2xl"></i>
                             </div>
-                            <span class="bg-pink-100 text-pink-700 text-xs font-bold px-2 py-1 rounded uppercase">Data Viz</span>
+                            <span class="bg-pink-100 text-pink-700 text-xs font-bold px-2 py-1 rounded uppercase" data-i18n="tag_dataviz">Data Viz</span>
                         </div>
 
-                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-pink-600 transition">Global Fertility Rate Dashboard</h4>
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-pink-600 transition" data-i18n="proj_fert_title">Global Fertility Rate Dashboard</h4>
 
-                        <p class="text-gray-600 text-sm mb-3 leading-relaxed">
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed" data-i18n="proj_fert_desc">
                             Interactive visualization platform analyzing global fertility trends with dynamic filtering, comparative analysis, and predictive modeling using D3.js.
                         </p>
 
                         <div class="bg-pink-50 p-3 rounded-lg mb-4 text-xs">
-                            <p class="font-semibold mb-1 text-gray-700">Analysis Features:</p>
+                            <p class="font-semibold mb-1 text-gray-700" data-i18n="lbl_analysis_feat">Analysis Features:</p>
                             <ul class="list-disc list-inside space-y-0.5 text-gray-700">
-                                <li>Time-series trend analysis</li>
-                                <li>Geographic heat mapping</li>
-                                <li>Predictive forecasting</li>
+                                <li data-i18n="feat_fert_1">Time-series trend analysis</li>
+                                <li data-i18n="feat_fert_2">Geographic heat mapping</li>
+                                <li data-i18n="feat_fert_3">Predictive forecasting</li>
                             </ul>
                         </div>
 
@@ -420,9 +611,9 @@
                                 <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">D3.js</span>
                                 <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Pandas</span>
                             </div>
-                            <a href="https://fertility-rate--gacchuguts.replit.app" target="_blank" class="inline-flex items-center text-sm font-bold text-primary hover:text-blue-800 transition">
-                                <span>Go Now!</span>
-                                <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                            <a href="https://fertility-rate--gacchuguts.replit.app" target="_blank" class="inline-flex items-center text-sm font-medium text-white bg-pink-600 px-4 py-2 rounded-md hover:bg-pink-700 transition shadow-sm hover:shadow-md">
+                                <span data-i18n="btn_launch">Launch Application</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
                             </a>
                         </div>
                     </div>
@@ -439,18 +630,18 @@
                             <span class="bg-orange-100 text-orange-700 text-xs font-bold px-2 py-1 rounded uppercase">3D/VR</span>
                         </div>
 
-                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-orange-600 transition">BIM Construction Simulation</h4>
+                        <h4 class="text-xl font-bold text-slate-800 mb-2 group-hover:text-orange-600 transition" data-i18n="proj_bim_title">BIM Construction Simulation</h4>
 
-                        <p class="text-gray-600 text-sm mb-3 leading-relaxed">
+                        <p class="text-gray-600 text-sm mb-3 leading-relaxed" data-i18n="proj_bim_desc">
                             Immersive 3D simulation integrating BIM with Unity for virtual walkthroughs, safety training, and design review with VR support.
                         </p>
 
                         <div class="bg-orange-50 p-3 rounded-lg mb-4 text-xs">
-                            <p class="font-semibold mb-1 text-gray-700">Simulation Modules:</p>
+                            <p class="font-semibold mb-1 text-gray-700" data-i18n="lbl_sim_mod">Simulation Modules:</p>
                             <ul class="list-disc list-inside space-y-0.5 text-gray-700">
-                                <li>4D construction sequencing</li>
-                                <li>Clash detection visualization</li>
-                                <li>VR/AR compatibility</li>
+                                <li data-i18n="feat_bim_1">4D construction sequencing</li>
+                                <li data-i18n="feat_bim_2">Clash detection visualization</li>
+                                <li data-i18n="feat_bim_3">VR/AR compatibility</li>
                             </ul>
                         </div>
 
@@ -460,9 +651,9 @@
                                 <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">C#</span>
                                 <span class="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">Revit API</span>
                             </div>
-                            <a href="https://www.bimntust.my.id/" target="_blank" class="inline-flex items-center text-sm font-bold text-primary hover:text-blue-800 transition">
-                                <span>Go Now!</span>
-                                <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                            <a href="https://www.bimntust.my.id/" target="_blank" class="inline-flex items-center text-sm font-medium text-white bg-orange-600 px-4 py-2 rounded-md hover:bg-orange-700 transition shadow-sm hover:shadow-md">
+                                <span data-i18n="btn_launch">Launch Application</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square ml-2 text-xs"></i>
                             </a>
                         </div>
                     </div>
@@ -479,32 +670,30 @@
             </div>
 
             <!-- Master's Thesis -->
-            <div class="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl p-6 mb-6 border-2 border-purple-100 shadow-sm hover:shadow-lg transition group">
-                <div class="flex items-start gap-4">
-                    <div class="p-4 bg-white rounded-lg shadow-sm">
-                        <i class="fa-solid fa-graduation-cap text-3xl text-purple-600"></i>
+            <div class="bg-white rounded-xl p-5 mb-6 border border-gray-200 shadow-sm hover:shadow-md transition group">
+                <div class="flex items-start gap-3">
+                    <div class="p-3 bg-blue-50 rounded-lg">
+                        <i class="fa-solid fa-graduation-cap text-xl text-primary"></i>
                     </div>
                     <div class="flex-1">
-                        <span class="inline-block bg-purple-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">MASTER'S THESIS</span>
-                        <h4 class="text-lg font-bold text-slate-800 leading-tight mb-2">
+                        <span class="inline-block bg-blue-100 text-primary text-xs font-bold px-2 py-1 rounded-full mb-2" data-i18n="lbl_master_thesis">MASTER'S THESIS</span>
+                        <h4 class="text-base font-bold text-slate-800 mb-2">
                             Optimizing High-Dimensional Steel Structure Design: A Hybrid Framework Integrating Dimensionality Reduction and Metaheuristic Algorithms
                         </h4>
                         <p class="text-sm text-gray-600 mb-3">
-                            <span class="font-semibold">National Taiwan University of Science and Technology</span> • July 2025
+                            <span class="font-semibold" data-i18n="edu_ntust">National Taiwan University of Science and Technology</span> • <span data-i18n="date_jul_2025">July 2025</span>
                         </p>
-                        <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                        <p class="text-gray-700 text-sm leading-relaxed mb-3" data-i18n="edu_ntust_thesis_desc">
                             Novel hybrid framework combining PCA, t-SNE, and metaheuristic algorithms (SOS, PSO) to solve high-dimensional steel structure design problems, achieving up to 60% reduction in optimization time.
                         </p>
                         <div class="flex flex-wrap gap-2 mb-3">
-                            <span class="text-xs bg-white text-purple-700 font-medium px-2 py-1 rounded-full border border-purple-200">Structural Optimization</span>
-                            <span class="text-xs bg-white text-purple-700 font-medium px-2 py-1 rounded-full border border-purple-200">Machine Learning</span>
-                            <span class="text-xs bg-white text-purple-700 font-medium px-2 py-1 rounded-full border border-purple-200">Metaheuristics</span>
+                            <span class="text-xs bg-slate-50 text-slate-700 px-2 py-1 rounded-full border">Structural Optimization</span>
+                            <span class="text-xs bg-slate-50 text-slate-700 px-2 py-1 rounded-full border">Machine Learning</span>
+                            <span class="text-xs bg-slate-50 text-slate-700 px-2 py-1 rounded-full border">Metaheuristics</span>
                         </div>
-                        <div class="flex gap-3">
-                            <a href="https://etheses.lib.ntust.edu.tw/thesis/detail/742fb0d7fbabf4ad116279c7539c9bb3/?seq=6" target="_blank" class="inline-flex items-center text-sm font-bold text-purple-600 hover:text-purple-800 transition bg-white px-4 py-2 rounded-lg shadow-sm">
-                                <i class="fa-solid fa-link mr-2"></i> <span data-i18n="btn_view_thesis">View Thesis</span>
-                            </a>
-                        </div>
+                        <a href="https://etheses.lib.ntust.edu.tw/thesis/detail/742fb0d7fbabf4ad116279c7539c9bb3/?seq=6" target="_blank" class="inline-flex items-center text-sm font-bold text-primary hover:text-blue-800 transition">
+                            <i class="fa-solid fa-link mr-2"></i> <span data-i18n="btn_view_thesis">View Thesis</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -516,14 +705,14 @@
                         <i class="fa-solid fa-book text-xl text-primary"></i>
                     </div>
                     <div class="flex-1">
-                        <span class="inline-block bg-blue-100 text-primary text-xs font-bold px-2 py-1 rounded-full mb-2">MASTER'S THESIS</span>
+                        <span class="inline-block bg-blue-100 text-primary text-xs font-bold px-2 py-1 rounded-full mb-2" data-i18n="lbl_master_thesis">MASTER'S THESIS</span>
                         <h4 class="text-base font-bold text-slate-800 mb-2">
                             Thesis: Optimizing high-dimensional steel structure design: a hybrid framework integrating dimensionality reduction and metaheuristic algorithms
                         </h4>
                         <p class="text-sm text-gray-600 mb-2">
-                            <span class="font-semibold">Petra Christian University</span> • June 2025
+                            <span class="font-semibold" data-i18n="edu_petra">Petra Christian University</span> • <span data-i18n="date_jun_2025">June 2025</span>
                         </p>
-                        <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                        <p class="text-gray-700 text-sm leading-relaxed mb-3" data-i18n="edu_petra_m_thesis_desc">
                             An intensive research on NTUST's Master's Thesis, providing more dimensionality reduction methods
                         </p>
                         <div class="flex flex-wrap gap-2 mb-3">
@@ -544,14 +733,14 @@
                         <i class="fa-solid fa-book text-xl text-primary"></i>
                     </div>
                     <div class="flex-1">
-                        <span class="inline-block bg-blue-100 text-primary text-xs font-bold px-2 py-1 rounded-full mb-2">BACHELOR'S THESIS</span>
+                        <span class="inline-block bg-blue-100 text-primary text-xs font-bold px-2 py-1 rounded-full mb-2" data-i18n="lbl_bachelor_thesis">BACHELOR'S THESIS</span>
                         <h4 class="text-base font-bold text-slate-800 mb-2">
                             Optimization of Earthquake Resistance Reinforced Concrete Portal Using Metaheuristic
                         </h4>
                         <p class="text-sm text-gray-600 mb-2">
                             <span class="font-semibold">Petra Christian University</span> • March 2024
                         </p>
-                        <p class="text-gray-700 text-sm leading-relaxed mb-3">
+                        <p class="text-gray-700 text-sm leading-relaxed mb-3" data-i18n="edu_petra_b_thesis_desc">
                             Applied metaheuristic algorithms to enhance seismic performance of RC portal frames while minimizing costs. Validated against Indonesian codes (SNI 1726 & SNI 2847).
                         </p>
                         <div class="flex flex-wrap gap-2 mb-3">
@@ -569,7 +758,7 @@
             <div class="mt-8">
                 <h4 class="text-lg font-bold text-slate-800 mb-4 flex items-center gap-2">
                     <i class="fa-solid fa-newspaper text-primary"></i>
-                    Conference Papers & Articles
+                    <span data-i18n="pubs_conf_header">Conference Papers & Articles</span>
                 </h4>
 
                 <div class="space-y-4">
@@ -580,10 +769,10 @@
                                     Metaheuristic-Guided Structural Design Optimization Enhanced by Dimensionality Reduction Techniques
                                 </h5>
                                 <p class="text-xs text-gray-600 mb-2">
-                                    <span class="italic">International Conference on Computing in Civil and Building Engineering</span> • Mar. 2026
+                                    <span class="italic">International Conference on Computing in Civil and Building Engineering</span> • <span data-i18n="date_mar_2026">Mar. 2026</span>
                                 </p>
                             </div>
-                            <div class="px-2 py-1 bg-blue-50 text-primary text-xs font-bold rounded-full whitespace-nowrap">CONFERENCE</div>
+                            <div class="px-2 py-1 bg-blue-50 text-primary text-xs font-bold rounded-full whitespace-nowrap" data-i18n="lbl_conference">CONFERENCE</div>
                         </div>
                     </div>
 
@@ -594,10 +783,10 @@
                                     A Hybrid Framework for Structural Analysis and Optimization Using Dimensionality Reduction and Metaheuristics
                                 </h5>
                                 <p class="text-xs text-gray-600 mb-2">
-                                    <span class="italic">The 29th Symposium on Construction Engineering and Management</span> • Jul. 2025
+                                    <span class="italic">The 29th Symposium on Construction Engineering and Management</span> • <span data-i18n="date_jul_2025">Jul. 2025</span>
                                 </p>
                             </div>
-                            <div class="px-2 py-1 bg-blue-50 text-primary text-xs font-bold rounded-full whitespace-nowrap">CONFERENCE</div>
+                            <div class="px-2 py-1 bg-blue-50 text-primary text-xs font-bold rounded-full whitespace-nowrap" data-i18n="lbl_conference">CONFERENCE</div>
                         </div>
                     </div>
 
@@ -611,7 +800,7 @@
                                     <span class="italic">China Civil and Hydraulic Engineering Journal</span> • 2026
                                 </p>
                             </div>
-                            <div class="px-2 py-1 bg-purple-50 text-purple-600 text-xs font-bold rounded-full whitespace-nowrap">JOURNAL</div>
+                            <div class="px-2 py-1 bg-purple-50 text-purple-600 text-xs font-bold rounded-full whitespace-nowrap" data-i18n="lbl_journal">JOURNAL</div>
                         </div>
                     </div>
 
@@ -625,7 +814,7 @@
                                     <span class="italic">Dimensi Utama Teknik Sipil</span> • 2026
                                 </p>
                             </div>
-                            <div class="px-2 py-1 bg-purple-50 text-purple-600 text-xs font-bold rounded-full whitespace-nowrap">JOURNAL</div>
+                            <div class="px-2 py-1 bg-purple-50 text-purple-600 text-xs font-bold rounded-full whitespace-nowrap" data-i18n="lbl_journal">JOURNAL</div>
                         </div>
                     </div>
                 </div>
@@ -670,20 +859,20 @@
                             </h5>
                             <div class="grid grid-cols-2 gap-4">
                                 <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">
-                                    <span class="block text-slate-800 font-bold text-sm">Indonesian</span>
-                                    <span class="block text-gray-500 text-xs mt-1">Native (C2)</span>
+                                    <span class="block text-slate-800 font-bold text-sm" data-i18n="lang_indo">Indonesian</span>
+                                    <span class="block text-gray-500 text-xs mt-1" data-i18n="lang_native">Native (C2)</span>
                                 </div>
                                 <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">
-                                    <span class="block text-slate-800 font-bold text-sm">Malaysian</span>
-                                    <span class="block text-gray-500 text-xs mt-1">Professional (C2)</span>
+                                    <span class="block text-slate-800 font-bold text-sm" data-i18n="lang_malay">Malaysian</span>
+                                    <span class="block text-gray-500 text-xs mt-1" data-i18n="lang_prof_c2">Professional (C2)</span>
                                 </div>
                                 <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">
-                                    <span class="block text-slate-800 font-bold text-sm">English</span>
-                                    <span class="block text-gray-500 text-xs mt-1">Professional (C1)</span>
+                                    <span class="block text-slate-800 font-bold text-sm" data-i18n="lang_eng">English</span>
+                                    <span class="block text-gray-500 text-xs mt-1" data-i18n="lang_prof_c1">Professional (C1)</span>
                                 </div>
                                 <div class="bg-slate-50 p-3 rounded-lg border border-slate-100 text-center">
-                                    <span class="block text-slate-800 font-bold text-sm">Chinese</span>
-                                    <span class="block text-gray-500 text-xs mt-1">Elementary (A2)</span>
+                                    <span class="block text-slate-800 font-bold text-sm" data-i18n="lang_chn">Chinese</span>
+                                    <span class="block text-gray-500 text-xs mt-1" data-i18n="lang_elem">Elementary (A2)</span>
                                 </div>
                             </div>
                         </div>
@@ -705,7 +894,7 @@
                             </div>
                             <div>
                                 <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_1">NSTC Scholarship</h5>
-                                <span class="text-gray-400 text-xs font-mono mt-1 block">Jul. 2025</span>
+                                <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_jul_2025">Jul. 2025</span>
                             </div>
                         </li>
                         <li class="flex gap-4 group">
@@ -714,7 +903,7 @@
                             </div>
                             <div>
                                 <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_2">Valedictorian - 85th Graduation Ceremony</h5>
-                                <span class="text-gray-400 text-xs font-mono mt-1 block">Mar. 2024</span>
+                                <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_mar_2024">Mar. 2024</span>
                             </div>
                         </li>
                         <li class="flex gap-4 group">
@@ -723,7 +912,7 @@
                             </div>
                             <div>
                                 <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_cumlaude">Cum Laude Representation</h5>
-                                <span class="text-gray-400 text-xs font-mono mt-1 block">Mar. 2024</span>
+                                <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_mar_2024">Mar. 2024</span>
                             </div>
                         </li>
                         <li class="flex gap-4 group">
@@ -732,7 +921,7 @@
                             </div>
                             <div>
                                 <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_active">Active Graduate Representation</h5>
-                                <span class="text-gray-400 text-xs font-mono mt-1 block">Mar. 2024</span>
+                                <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_mar_2024">Mar. 2024</span>
                             </div>
                         </li>
                         <li class="flex gap-4 group">
@@ -741,7 +930,7 @@
                             </div>
                             <div>
                                 <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_best">Best Civil Engineering Graduate</h5>
-                                <span class="text-gray-400 text-xs font-mono mt-1 block">Mar. 2024</span>
+                                <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_mar_2024">Mar. 2024</span>
                             </div>
                         </li>
                         <li class="flex gap-4 group">
@@ -750,7 +939,7 @@
                             </div>
                             <div>
                                 <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_3">PT Adaro Indonesia Scholarship</h5>
-                                <span class="text-gray-400 text-xs font-mono mt-1 block">Jun. 2023</span>
+                                <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_jun_2023">Jun. 2023</span>
                             </div>
                         </li>
                         <li class="flex gap-4 group">
@@ -759,7 +948,7 @@
                             </div>
                             <div>
                                 <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_4">1st Winner - Civil Analysis & Photography</h5>
-                                <span class="text-gray-400 text-xs font-mono mt-1 block">Jun. 2022</span>
+                                <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_jun_2022">Jun. 2022</span>
                             </div>
                         </li>
                         <li class="flex gap-4 group">
@@ -768,7 +957,7 @@
                             </div>
                             <div>
                                 <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_benjamin">Ever-best Benjamin Gideon & Associates Scholarship</h5>
-                                <span class="text-gray-400 text-xs font-mono mt-1 block">Jun. 2021</span>
+                                <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_jun_2021">Jun. 2021</span>
                             </div>
                         </li>
                         <li class="flex gap-4 group">
@@ -777,7 +966,7 @@
                             </div>
                             <div>
                                 <h5 class="font-bold text-slate-800 text-sm" data-i18n="award_acad">Academic Achievement Scholarship</h5>
-                                <span class="text-gray-400 text-xs font-mono mt-1 block">Feb. 2021</span>
+                                <span class="text-gray-400 text-xs font-mono mt-1 block" data-i18n="date_feb_2021">Feb. 2021</span>
                             </div>
                         </li>
                     </ul>
@@ -790,20 +979,29 @@
     <!-- Footer -->
     <footer class="bg-dark text-white py-12 mt-20">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-2">Let's Connect</h2>
-            <p class="text-gray-400 mb-8">Feel free to reach out for collaborations</p>
+            <h2 class="text-3xl font-bold mb-2" data-i18n="footer_title">Let's Connect</h2>
+            <p class="text-gray-400 mb-8" data-i18n="footer_desc">Feel free to reach out for collaborations</p>
 
             <div class="flex justify-center gap-6 mb-8">
-                <a href="mailto:gacchuguts@gmail.com" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition">
+                <a href="mailto:gacchuguts@gmail.com" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition" title="Email">
                     <i class="fa-solid fa-envelope text-xl"></i>
                 </a>
-                <a href="tel:+886987067808" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition">
+
+                <a href="https://www.linkedin.com/in/steven-gaillard-301739218/" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition" title="LinkedIn">
+                    <i class="fa-brands fa-linkedin-in text-xl"></i>
+                </a>
+
+                <a href="https://www.youtube.com/@VoxSacraDei" target="_blank" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition" title="YouTube">
+                    <i class="fa-brands fa-youtube text-xl"></i>
+                </a>
+
+                <a href="tel:+886987067808" class="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition" title="Call">
                     <i class="fa-solid fa-phone text-xl"></i>
                 </a>
             </div>
 
             <div class="border-t border-white/10 pt-6">
-                <p class="text-gray-500 text-xs">
+                <p class="text-gray-500 text-xs" data-i18n="footer_copyright">
                     &copy; 2025 Steven Gaillard. Built with HTML & Tailwind CSS.
                 </p>
             </div>
@@ -817,68 +1015,200 @@
         const translations = {
             en: {
                 name: "Steven Gaillard",
-                role: "Civil & Structural Engineer",
-                nav_about: "About", nav_edu: "Education", nav_exp: "Experience", nav_proj: "Projects",
-                hero_greeting: "Hello, I'm",
-                hero_desc: "PhD student in Civil and Construction Engineering at NTUST. Passionate about structural optimization, machine learning in engineering, and software development.",
-                btn_contact: "Contact Me",
-                sec_edu: "Education",
+                sec_pubs: "Publications & Research",
+                // Badges
+                lbl_conference: "CONFERENCE",
+                lbl_journal: "JOURNAL",
+
+                // Footer
+                footer_title: "Let's Connect",
+                footer_desc: "Feel free to reach out for collaborations",
+                footer_copyright: "© 2025 Steven Gaillard. Built with HTML & Tailwind CSS.",
+                // NEW Keys for Thesis Labels
+                lbl_master_thesis: "MASTER'S THESIS",
+                lbl_bachelor_thesis: "BACHELOR'S THESIS",
+                role: "Civil & Structural Engineer | Ph.D. Candidate",
+                nav_about: "Profile", nav_edu: "Academic Background", nav_exp: "Professional Experience", nav_proj: "Engineering Portfolio", nav_pubs: "Publications",
+                hero_greeting: "Welcome, I am",
+                hero_desc: "Devoted Christian and Ph.D. Researcher in Civil and Construction Engineering at NTUST. Passionate about structural optimization, machine learning in engineering, and software development.",
+                btn_contact: "Get in Touch",
+                btn_launch: "Launch Application", // Added key for new buttons
+                sec_edu: "Academic Background",
                 edu_ntust: "National Taiwan University of Science and Technology",
-                edu_ntust_phd_deg: "PhD Student in Civil and Construction Engineering",
+                edu_ntust_phd_deg: "Ph.D. Candidate in Civil & Construction Engineering",
                 edu_ntust_phd_date: "Sept. 2025 - Present",
-                edu_ntust_deg: "M.Sc. in Civil and Construction Engineering",
+                edu_ntust_deg: "M.Sc. in Civil & Construction Engineering",
                 edu_ntust_date: "Sept. 2024 - Jul. 2025",
                 edu_ntust_thesis: "Thesis: Optimizing High-Dimensional Steel Structure Design: A Hybrid Framework Integrating Dimensionality Reduction and Metaheuristic Algorithms",
                 edu_petra: "Petra Christian University",
                 edu_petra_m_deg: "M.Sc. in Civil Engineering",
                 edu_petra_m_date: "Mar. 2024 - Jul. 2025",
                 edu_petra_m_thesis: "Thesis: Optimizing high-dimensional steel structure design: a hybrid framework integrating dimensionality reduction and metaheuristic algorithms",
-                edu_petra_b_deg: "B.S. in Civil Engineering",
+                edu_petra_b_deg: "B.Eng. in Civil Engineering",
                 edu_petra_b_date: "Aug. 2020 - Mar. 2024",
                 edu_petra_b_thesis: "Thesis: Optimization of Earthquake Resistance Reinforced Concrete Portal Using Metaheuristic",
-                sec_exp: "Experience",
+                sec_exp: "Professional Experience",
                 exp_date: "Dec. 2023 - Jul. 2024",
-                exp_role: "Structural Engineer, Site Engineer, Estimator",
-                exp_desc1: "Led the design and analysis of structural systems for residential and commercial projects including malls, factories, and jetties.",
-                exp_desc2: "Ensured compliance with Indonesian building codes (SNI) and safety standards.",
-                exp_desc3: "Conducted cost estimation (QS) and quality assurance (QA) on site.",
-                lead_role: "New Student Mentor",
-                lead_date: "Jun. 2021 - Dec. 2023",
-                lead_desc1: "Guided new students in adapting to university life, fostering personal, academic, and spiritual growth.",
-                lead_desc2: "Provided academic mentoring and support to help students meet university requirements.",
-                sec_proj: "Featured Projects",
-                proj_1_title: "Anchor Analysis Tool (ACI 318)",
-                proj_1_desc: "A professional engineering tool for calculating anchor bolt capacity in concrete. Features dynamic analysis, PDF report generation with formula rendering, and cloud database storage.",
-                proj_2_title: "High-Dimensional Optimization",
-                proj_2_desc: "Hybrid framework integrating dimensionality reduction and metaheuristic algorithms for optimizing steel structure design.",
-                btn_view_proj: "View Project", btn_view_code: "View Code",
-                btn_view_thesis: "View Thesis",
-                sec_skills: "Skills", skill_prog: "Programming & Software", skill_lang: "Languages",
-                sec_awards: "Honors & Awards",
-                award_1: "NSTC Scholarship",
-                award_2: "Valedictorian - 85th Graduation Ceremony",
-                award_cumlaude: "Cum Laude Representation of the 85th Graduation Ceremony",
-                award_active: "Active Graduate Representation of the 85th Graduation Ceremony",
-                award_best: "Best Civil Engineering Graduate Class of 2020",
-                award_3: "PT Adaro Indonesia Scholarship",
-                award_4: "1st Winner - Civil Analysis & Photography",
-                award_benjamin: "Ever-best Benjamin Gideon & Associates Scholarship",
-                award_acad: "Academic Achievement Scholarship",
-                footer_title: "Let's Connect",
-                nav_pubs: "Research",
-                // NEW KEYS BELOW
-                exp_arch_role: "Structural Engineer",
+                exp_role: "Structural Engineer & Lead Estimator",
+                exp_desc1: "Spearheaded the structural design and analysis for complex residential and commercial developments, including large-scale retail centers, industrial facilities, and marine infrastructure.",
+                exp_desc2: "Ensured rigorous compliance with Indonesian National Standards (SNI) and international codes (ACI, ASCE, AISC).",
+                exp_desc3: "Orchestrated on-site Cost Estimation (QS) and Quality Assurance (QA) protocols to optimize project delivery.",
+                exp_arch_role: "Structural Engineer (Intern)",
                 exp_arch_date: "Jun. 2023 - Dec. 2023",
-                exp_arch_desc1: "Assisted in the design and structural analysis of residential and commercial buildings using AutoCAD and SAP2000.",
-                exp_arch_desc2: "Performed calculations for load-bearing elements, foundations, and structural integrity under senior supervision.",
+                exp_arch_desc1: "Contributed to the structural analysis and drafting of high-rise residential and commercial assets using AutoCAD and SAP2000.",
+                exp_arch_desc2: "Executed precise calculations for load-bearing elements and foundation systems under senior supervision.",
+                lead_role: "Freshmen Mentor & Academic Advisor",
+                lead_date: "Jun. 2021 - Dec. 2023",
+                // Inside translations -> en
+                lead_desc1: "Facilitated the transition of incoming students into university life, fostering academic excellence and spiritual growth.",
+                lead_desc_faith: "Guided students in understanding how to live a meaningful and successful life through Christian values and principles.", // ADDED
+                lead_desc2: "Delivered academic tutoring and strategic guidance to ensure students met rigorous university standards.",
+                sec_proj: "Engineering Portfolio",
+                // Projects
+                tag_eng_tool: "Engineering Tool",
+                tag_design_tool: "Design Tool",
+                tag_fullstack: "Full Stack",
+                tag_dataviz: "Data Viz",
+                
+                proj_webfea_title: "WebFEA: 2D Structural Analysis",
+                proj_webfea_desc: "A browser-based Finite Element Analysis (FEA) solver for structural frames. Performs matrix structural analysis to calculate reactions, displacements, and internal forces optimized for both mobile and computer.",
+                lbl_capabilities: "Capabilities:",
+                feat_webfea_1: "2D Frame Analysis",
+                feat_webfea_2: "Stiffness Matrix Method",
+                feat_webfea_3: "Real-time Visualization",
+
+                proj_slab_title: "RC Slab Design Tool",
+                proj_slab_desc: "Automated reinforced concrete slab design calculator. Determines reinforcement requirements based on load inputs and code constraints (ACI/SNI).",
+                lbl_features: "Key Features:",
+                feat_slab_1: "Moment Calculation",
+                feat_slab_2: "Reinforcement Scheduling",
+                feat_slab_3: "Code Compliance Check",
+
+                proj_col_title: "RC Biaxial Column Design Tool",
+                proj_col_desc: "Interactive tool for generating 3D interaction diagrams for reinforced concrete columns under biaxial bending and axial loads.",
+                feat_col_1: "P-M-M Interaction Surface",
+                feat_col_2: "Cross-section Analysis",
+                feat_col_3: "3D Visualization",
+
+                proj_anchor_title: "Anchor Design Tool (ACI 318-19)",
+                proj_anchor_desc: "Professional engineering tool for calculating anchor bolt capacity in concrete per ACI 318-19 standards. Features dynamic analysis, PDF reports with LaTeX formulas, and Firebase cloud storage.",
+                feat_anchor_1: "Real-time compliance checking",
+                feat_anchor_2: "Multi-language support (EN/ZH)",
+                feat_anchor_3: "Professional PDF reports",
+
+                proj_pm_title: "Construction Project Management",
+                proj_pm_desc: "Web-based platform for construction firms with real-time collaboration, document tracking, budget monitoring, and timeline visualization.",
+                lbl_core_caps: "Core Capabilities:",
+                feat_pm_1: "Task & milestone tracking",
+                feat_pm_2: "Budget & resource management",
+                feat_pm_3: "Document version control",
+
+                proj_fert_title: "Global Fertility Rate Dashboard",
+                proj_fert_desc: "Interactive visualization platform analyzing global fertility trends with dynamic filtering, comparative analysis, and predictive modeling using D3.js.",
+                lbl_analysis_feat: "Analysis Features:",
+                feat_fert_1: "Time-series trend analysis",
+                feat_fert_2: "Geographic heat mapping",
+                feat_fert_3: "Predictive forecasting",
+
+                proj_bim_title: "BIM Construction Simulation",
+                proj_bim_desc: "Immersive 3D simulation integrating BIM with Unity for virtual walkthroughs, safety training, and design review with VR support.",
+                lbl_sim_mod: "Simulation Modules:",
+                feat_bim_1: "4D construction sequencing",
+                feat_bim_2: "Clash detection visualization",
+                feat_bim_3: "VR/AR compatibility",
+
+                // Publications
+                pubs_conf_header: "Conference Papers & Articles",
+                edu_ntust_thesis_desc: "Novel hybrid framework combining PCA, t-SNE, and metaheuristic algorithms (SOS, PSO) to solve high-dimensional steel structure design problems, achieving up to 60% reduction in optimization time.",
+                edu_petra_m_thesis_desc: "An intensive research on NTUST's Master's Thesis, providing more dimensionality reduction methods",
+                edu_petra_b_thesis_desc: "Applied metaheuristic algorithms to enhance seismic performance of RC portal frames while minimizing costs. Validated against Indonesian codes (SNI 1726 & SNI 2847).",
+
+                // Languages
+                lang_indo: "Indonesian",
+                lang_malay: "Malaysian",
+                lang_eng: "English",
+                lang_chn: "Chinese",
+                lang_native: "Native (C2)",
+                lang_prof_c2: "Professional (C2)",
+                lang_prof_c1: "Professional (C1)",
+                lang_elem: "Elementary (A2)",
+                // Locations
+                loc_yunlin_tw: "Yunlin, Taiwan",
+                loc_surabaya_id: "Surabaya, Indonesia",
+                loc_taipei_tw: "Taipei, Taiwan",
+                
+                // Specific Dates (Awards/Papers)
+                date_mar_2026: "Mar. 2026",
+                date_jul_2025: "Jul. 2025",
+                date_jun_2025: "Jun. 2025",
+                date_mar_2024: "Mar. 2024",
+                date_jun_2023: "Jun. 2023",
+                date_jun_2022: "Jun. 2022",
+                date_jun_2021: "Jun. 2021",
+                date_feb_2021: "Feb. 2021",
+                loc_surabaya: "Surabaya",
+                loc_indonesia: "Indonesia",
+                loc_taipei: "Taipei",
+                loc_taiwan: "Taiwan",
+                loc_yunlin: "Yunlin",
+
+                // Months
+                mon_jan: "Jan",
+                mon_feb: "Feb",
+                mon_mar: "Mar",
+                mon_apr: "Apr",
+                mon_may: "May",
+                mon_jun: "Jun",
+                mon_jul: "Jul",
+                mon_aug: "Aug",
+                mon_sep: "Sept",
+                mon_oct: "Oct",
+                mon_nov: "Nov",
+                mon_dec: "Dec",
+                proj_1_title: "Anchor Analysis Tool (ACI 318)",
+                proj_1_desc: "A comprehensive engineering suite for calculating anchor bolt capacity in concrete. Features include dynamic compliance analysis, automated PDF reporting with LaTeX rendering, and cloud-based data persistence.",
+                proj_2_title: "High-Dimensional Optimization",
+                proj_2_desc: "Development of a novel hybrid framework integrating dimensionality reduction techniques with metaheuristic algorithms to optimize complex steel structures.",
+                btn_view_proj: "View Details", btn_view_code: "Source Code",
+                btn_view_thesis: "Access Thesis",
+                sec_skills: "Technical Proficiencies", skill_prog: "Computational Engineering & Software", skill_lang: "Languages",
+                sec_awards: "Honors & Distinctions",
+                award_1: "NSTC Research Scholarship",
+                award_2: "Valedictorian - 85th Graduation Ceremony",
+                award_cumlaude: "Cum Laude Distinction",
+                award_active: "Active Graduate Representative",
+                award_best: "Top Civil Engineering Graduate (Class of 2020)",
+                award_3: "PT Adaro Indonesia Scholarship Grant",
+                award_4: "1st Place - Civil Analysis & Photography Competition",
+                award_benjamin: "Benjamin Gideon & Associates Scholarship (Merit)",
+                award_acad: "Academic Achievement Scholarship",
+                footer_title: "Contact Information",
+                nav_pubs: "Publications",
+                exp_fengyu_role: "Structural Engineering Intern & Researcher",
+                exp_fengyu_date: "Jan. 2026 - Feb. 2026",
+                exp_fengyu_desc1: "Developed a suite of 4 web-based structural analysis tools (Anchor, RC Slab, RC Column, WebFEA) using React.js and Three.js to automate engineering calculations.",
+                exp_fengyu_desc2: "Conducted on-site inspections at the Yunlin construction site, auditing QA protocols, safety standards, and formwork systems.",
+                exp_fengyu_desc3: "Authored a comparative technical report analyzing construction methodologies, automation, and safety regulations between Taiwan and Indonesia.",
             },
             zh: {
                 name: "曾志强 (Steven Gaillard)",
+                sec_pubs: "研究著作與出版",
+                lbl_conference: "會議論文",
+                lbl_journal: "期刊文章",
+
+                // Footer
+                footer_title: "與我聯繫",
+                footer_desc: "歡迎隨時聯繫洽談合作機會",
+                footer_copyright: "© 2025 Steven Gaillard. 使用 HTML 與 Tailwind CSS 建置。",
+                // NEW Keys for Thesis Labels
+                lbl_master_thesis: "碩士論文",
+                lbl_bachelor_thesis: "學士論文",
                 role: "土木與結構工程師",
                 nav_about: "關於我", nav_edu: "學歷", nav_exp: "工作經驗", nav_proj: "專案作品",
                 hero_greeting: "你好，我是",
-                hero_desc: "國立臺灣科技大學土木與建築工程博士生。熱衷於結構優化、機器學習在工程中的應用以及軟體開發。",
+                hero_desc: "虔誠基督徒，目前為國立臺灣科技大學土木與建築工程博士生。熱衷於結構優化、機器學習在工程中的應用以及軟體開發。",
                 btn_contact: "聯絡我",
+                btn_launch: "啟動應用程式",
                 sec_edu: "教育背景",
                 edu_ntust: "國立臺灣科技大學",
                 edu_ntust_phd_deg: "土木與建築工程博士生",
@@ -902,8 +1232,109 @@
                 lead_role: "新生導師",
                 lead_date: "2021年6月 - 2023年12月",
                 lead_desc1: "指導新生適應大學生活，幫助其在個人、學術和靈性方面成長。",
+                lead_desc_faith: "引導學生透過基督信仰價值觀與原則，活出有意義且成功的人生。", // ADDED
                 lead_desc2: "提供學術輔導和支持，幫助新生適應大學的學術要求。",
-                sec_proj: "精選專案",
+                sec_proj: "工程作品集",
+                tag_eng_tool: "工程工具",
+                tag_design_tool: "設計工具",
+                tag_fullstack: "全端開發",
+                tag_dataviz: "數據視覺化",
+                
+                proj_webfea_title: "WebFEA: 2D 結構分析",
+                proj_webfea_desc: "基於瀏覽器的結構框架有限元素分析 (FEA) 求解器。執行矩陣結構分析以計算反力、位移和內力，針對手機與電腦操作進行優化。",
+                lbl_capabilities: "功能特點：",
+                feat_webfea_1: "2D 框架分析",
+                feat_webfea_2: "勁度矩陣法",
+                feat_webfea_3: "即時視覺化",
+
+                proj_slab_title: "RC 版設計工具",
+                proj_slab_desc: "自動化鋼筋混凝土版設計計算器。根據載重輸入和規範限制 (ACI/SNI) 確定配筋需求。",
+                lbl_features: "關鍵功能：",
+                feat_slab_1: "彎矩計算",
+                feat_slab_2: "配筋排程",
+                feat_slab_3: "規範合規性檢查",
+
+                proj_col_title: "RC 雙向柱設計工具",
+                proj_col_desc: "用於生成雙向彎矩和軸向載重下鋼筋混凝土柱 3D 互制圖的互動式工具。",
+                feat_col_1: "P-M-M 互制曲面",
+                feat_col_2: "斷面分析",
+                feat_col_3: "3D 視覺化",
+
+                proj_anchor_title: "錨栓設計工具 (ACI 318-19)",
+                proj_anchor_desc: "用於計算 ACI 318-19 規範下混凝土錨栓承載力的專業工程工具。具備動態分析、含 LaTeX 公式的 PDF 報告生成及 Firebase 雲端儲存功能。",
+                feat_anchor_1: "即時合規性檢查",
+                feat_anchor_2: "多語言支持 (中/英)",
+                feat_anchor_3: "專業 PDF 報告",
+
+                proj_pm_title: "營建專案管理系統",
+                proj_pm_desc: "為建築公司打造的網頁平台，具備即時協作、文件追蹤、預算監控和時間軸視覺化功能。",
+                lbl_core_caps: "核心能力：",
+                feat_pm_1: "任務與里程碑追蹤",
+                feat_pm_2: "預算與資源管理",
+                feat_pm_3: "文件版本控制",
+
+                proj_fert_title: "全球生育率儀表板",
+                proj_fert_desc: "分析全球生育率趨勢的互動式視覺化平台，使用 D3.js 進行動態過濾、比較分析和預測建模。",
+                lbl_analysis_feat: "分析功能：",
+                feat_fert_1: "時間序列趨勢分析",
+                feat_fert_2: "地理熱圖",
+                feat_fert_3: "預測建模",
+
+                proj_bim_title: "BIM 施工模擬",
+                proj_bim_desc: "整合 BIM 與 Unity 的沉浸式 3D 模擬，用於虛擬導覽、安全培訓和支援 VR 的設計審查。",
+                lbl_sim_mod: "模擬模組：",
+                feat_bim_1: "4D 施工排程",
+                feat_bim_2: "衝突檢測視覺化",
+                feat_bim_3: "VR/AR 相容性",
+
+                // Publications
+                pubs_conf_header: "會議論文與期刊文章",
+                edu_ntust_thesis_desc: "結合主成分分析(PCA)、t-SNE與元啟發式演算法(SOS, PSO)的新穎混合框架，用於解決高維鋼結構設計問題，優化時間減少高達60%。",
+                edu_petra_m_thesis_desc: "針對臺科大碩士論文的深入研究，提供更多維度縮減方法。",
+                edu_petra_b_thesis_desc: "應用元啟發式演算法提升鋼筋混凝土門型構架的抗震性能並最小化成本。已通過印尼規範 (SNI 1726 & SNI 2847) 驗證。",
+
+                // Languages
+                lang_indo: "印尼語",
+                lang_malay: "馬來語",
+                lang_eng: "英語",
+                lang_chn: "中文",
+                lang_native: "母語 (C2)",
+                lang_prof_c2: "專業級 (C2)",
+                lang_prof_c1: "專業級 (C1)",
+                lang_elem: "初級 (A2)",
+                // Locations
+                loc_yunlin_tw: "台灣雲林",
+                loc_surabaya_id: "印尼泗水",
+                loc_taipei_tw: "台灣台北",
+
+                // Specific Dates (Awards/Papers)
+                date_mar_2026: "2026年3月",
+                date_jul_2025: "2025年7月",
+                date_jun_2025: "2025年6月",
+                date_mar_2024: "2024年3月",
+                date_jun_2023: "2023年6月",
+                date_jun_2022: "2022年6月",
+                date_jun_2021: "2021年6月",
+                date_feb_2021: "2021年2月",
+                loc_surabaya: "泗水",
+                loc_indonesia: "印尼",
+                loc_taipei: "台北",
+                loc_taiwan: "台灣",
+                loc_yunlin: "雲林",
+
+                // Months
+                mon_jan: "1月",
+                mon_feb: "2月",
+                mon_mar: "3月",
+                mon_apr: "4月",
+                mon_may: "5月",
+                mon_jun: "6月",
+                mon_jul: "7月",
+                mon_aug: "8月",
+                mon_sep: "9月",
+                mon_oct: "10月",
+                mon_nov: "11月",
+                mon_dec: "12月",
                 proj_1_title: "錨栓分析工具 (ACI 318)",
                 proj_1_desc: "專業工程工具，用於計算混凝土錨栓承載力。具備動態分析、含公式的PDF報告生成及雲端資料庫儲存功能。",
                 proj_2_title: "高維度結構優化",
@@ -927,6 +1358,11 @@
                 exp_arch_date: "2023年6月 - 2023年12月",
                 exp_arch_desc1: "使用 AutoCAD 和 SAP2000 協助住宅與商業建築的結構設計與分析。",
                 exp_arch_desc2: "在資深工程師指導下進行承重元件、地基和結構完整性的計算。",
+                exp_fengyu_role: "結構工程實習生 & 研究員",
+                exp_fengyu_date: "2026年1月 - 2026年2月",
+                exp_fengyu_desc1: "使用 React.js 和 Three.js 開發了四套網頁版結構分析工具（錨栓、RC版、RC柱、WebFEA），實現工程計算自動化。",
+                exp_fengyu_desc2: "於雲林工地進行現場視察，審核品質保證（QA）協議、安全標準及模板系統。",
+                exp_fengyu_desc3: "撰寫技術比較報告，分析台灣與印尼在施工方法、自動化技術及安全規範上的差異。",
             }
         };
 
